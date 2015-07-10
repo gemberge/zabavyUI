@@ -1,0 +1,53 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-body form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">тип:</label>
+				<div class="col-sm-4">
+					<input name="tutorial" type="checkbox" data-toggle="toggle" data-on="навчальна" data-off="звичайна" <% if(tutorial){%>checked<%}%> >
+				</div>
+				<label class="col-sm-2 control-label">перемога:</label>
+				<div class="col-sm-3">
+					<select name="winType" class="form-control">
+						<option value="POINTS" <% if(winType == 'POINTS'){%>selected<%}%> > за балами </option>
+						<option value="BINARY" <% if(winType == 'BINARY'){%>selected<%}%> > бінарна</option>
+					</select>
+				</div>
+			</div>
+			<div id="event" class="form-group">
+				<label class="col-sm-2 control-label">день:</label>
+				<div class="col-sm-9">
+					<select name="eventId" class="form-control"></select>
+				</div>
+			</div>
+			<div id="mainGamebox" class="form-group">
+				<label class="col-sm-2 control-label">забавка:</label>
+				<div class="col-sm-9">
+					<select name="mainGameboxId" class="form-control"></select>
+				</div>
+			</div>
+			<div id="additionalGameboxes" class="form-group">
+				<label class="col-sm-2 control-label">доповнення:</label>
+				<div class="col-sm-9">
+					<p class='form-control-static'> завантажується </p>
+				</div>
+			</div>
+			<div id="newPlayer" class="form-group">
+				<label class="col-sm-2 control-label">гравці:</label>
+				<div class="col-sm-9">
+					<input name="newPlayer" type="text" class="form-control" placeholder="додавання нового гравця">
+				</div>
+			</div>
+			<div id="scores" class="form-group">
+				<div class="col-sm-9 col-sm-offset-2"></div>
+			</div>
+
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">скасувати</button>
+			<button type="button" class="btn btn-info cloneBtn">клонувати</button>
+			<button type="button" class="btn btn-danger delBtn">видалити</button>
+			<button type="button" class="btn btn-primary saveBtn">зберегти</button>
+		</div>
+	</div>
+</div>

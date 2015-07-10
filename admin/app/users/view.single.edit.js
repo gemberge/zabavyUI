@@ -1,8 +1,9 @@
-define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'users/model'], function ($, _, Backbone, momentLib, datetimepicker, Model) {
+define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'users/model', 'text!users/template.single.edit.html'],
+	function ($, _, Backbone, momentLib, datetimepicker, Model, Template) {
 
 	var SingleEditView = Backbone.View.extend({
 		el: $('#main'),
-		template: _.template( $('#template-single-edit-users').html() ),
+		template: _.template(Template),
 		events: {
 			'click .saveBtn'	: 'saveEntity',
 			'click .cancelBtn'	: 'cancel'

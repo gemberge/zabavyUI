@@ -1,9 +1,10 @@
-define(['jquery', 'underscore', 'backbone', 'matches/view.single.edit', 'scores/collection'], function ($, _, Backbone, SingleEditView, ScoresCollection) {
+define(['jquery', 'underscore', 'backbone', 'matches/view.single.edit', 'scores/collection', 'text!matches/template.single.embedded.event.html'],
+	function ($, _, Backbone, SingleEditView, ScoresCollection, Template) {
 
 	var View = Backbone.View.extend({
 		tagName: 'div',
 		className: 'super-list-item clickable editView',
-		template: _.template( $('#template-single-embedded-event-match').html() ),
+		template: _.template(Template),
 		events: {
 			'click': 'showEditView'
 		},

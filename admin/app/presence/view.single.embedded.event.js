@@ -1,9 +1,10 @@
-define(['jquery', 'underscore', 'backbone', 'presence/view.single.edit'], function ($, _, Backbone, SingleEditView) {
+define(['jquery', 'underscore', 'backbone', 'presence/view.single.edit', 'text!presence/template.single.embedded.event.html'],
+	function ($, _, Backbone, SingleEditView, Template) {
 
 	var View = Backbone.View.extend({
 		tagName: 'div',
 		className: 'super-list-item',
-		template: _.template( $('#template-single-embedded-event-presence').html() ),
+		template: _.template(Template),
 		events: {
 			'click .editView': 'showEditView',
 			'click .goOut'	: 'goOut'

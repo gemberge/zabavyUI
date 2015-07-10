@@ -1,9 +1,9 @@
-define(['jquery', 'underscore', 'backbone'], function ($, _, Backbone) {
+define(['jquery', 'underscore', 'backbone', 'text!scores/template.single.embedded.match.html'], function ($, _, Backbone, Template) {
 
 	var View = Backbone.View.extend({
 		tagName: 'li',
 		className: 'list-group-item',
-		template: _.template( $('#template-single-embedded-match-scores').html() ),
+		template: _.template(Template),
 		events: {
 			'click .delScoreBtn': 'deleteScore',
 			'change input[name="points"]': 'pointsChanged',

@@ -1,9 +1,9 @@
-define(['jquery', 'underscore', 'backbone', 'bootstrap', 'moment', 'datetimepicker', 'presence/model', 'users/collection', 'days/collection'],
-	function ($, _, Backbone, Bootstrap, momentLib, datetimepicker, Model, UsersCollection, DaysCollection) {
+define(['jquery', 'underscore', 'backbone', 'bootstrap', 'moment', 'datetimepicker', 'presence/model', 'users/collection', 'days/collection', 'text!presence/template.single.edit.html'],
+	function ($, _, Backbone, Bootstrap, momentLib, datetimepicker, Model, UsersCollection, DaysCollection, Template) {
 
 	var View = Backbone.View.extend({
 		el: $('#modal'),
-		template: _.template( $('#template-single-edit-presence').html() ),
+		template: _.template(Template),
 		events: {
 			'click .saveBtn'			: 'saveEntity',
 			'click .delBtn'				: 'delEntity'

@@ -1,8 +1,8 @@
-define(['jquery', 'underscore', 'backbone'], function ($, _, Backbone) {
+define(['jquery', 'underscore', 'backbone', 'text!gameboxes/template.list.html'], function ($, _, Backbone, Template) {
 
 	var ListView = Backbone.View.extend({
 		el: $('#main'),
-		template: _.template( $('#template-list-gameboxes').html() ),
+		template: _.template(Template),
 		render: function(data) {
 			this.$el.html( this.template(data) );
 		}

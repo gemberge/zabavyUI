@@ -1,8 +1,8 @@
-define(['jquery', 'underscore', 'backbone', 'users/model'], function ($, _, Backbone, Model) {
+define(['jquery', 'underscore', 'backbone', 'users/model', 'text!users/template.single.html'], function ($, _, Backbone, Model, Template) {
 
 	var SingleView = Backbone.View.extend({
 		el: $('#main'),
-		template: _.template( $('#template-single-users').html() ),
+		template: _.template(Template),
 		events: {
 			'click .editBtn': 'editEntity',
 			'click .delBtn'	: 'deleteEntity'

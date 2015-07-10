@@ -1,0 +1,31 @@
+<div id="header">
+	<div class="actionLinks pull-right">
+		<a href="#/days/new" class="green"><span class="glyphicon glyphicon-plus"></span></a>
+		<a><span class="glyphicon glyphicon-sort"></span></a>
+		<a><span class="glyphicon glyphicon-filter"></span></a>
+	</div>
+</div>
+<div class="super-list">
+	<% _.each(collection.models, function(day) { %>
+	<a href="#days/<%= day.get('id') %>" class="super-list-item">
+		<div class="stat pull-right">
+			<span class="value">21</span>
+			<span class="key">людей</span>
+		</div>
+		<div class="stat pull-right">
+			<span class="value">42</span>
+			<span class="key">партій</span>
+		</div>
+		<div class="stat pull-right">
+			<span class="value">
+				<%= moment.duration(day.get('endTime') - day.get('startTime')).hours() %>:<%= moment.duration(day.get('endTime') - day.get('startTime')).minutes() %>
+			</span>
+			<span class="key">тривалість</span>
+		</div>
+		<span class="title"><%= day.get('title') %></span>
+		<span class="subtitle">
+			<%= moment(day.get('startTime')).format('HH:mm, DD.MM.YYYY') %>
+		</span>
+	</a>
+	<% }); %>
+</div>

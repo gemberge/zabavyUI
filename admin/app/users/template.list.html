@@ -1,0 +1,32 @@
+<div id="header">
+	<div class="actionLinks pull-right">
+		<a href="#/users/new" class="green"><span class="glyphicon glyphicon-plus"></span></a>
+		<a><span class="glyphicon glyphicon-sort"></span></a>
+		<a><span class="glyphicon glyphicon-filter"></span></a>
+	</div>
+</div>
+<div class="super-list">
+	<% _.each(collection.models, function(user) { %>
+	<a href="#users/<%= user.get('id') %>" class="super-list-item">
+		<span class="avatar pull-left">
+			<img src="<%= user.get('photoUrl') %>" class="img-rounded">
+		</span>
+		<div class="stat pull-right">
+			<span class="value">21</span>
+			<span class="key">здибанок</span>
+		</div>
+		<div class="stat pull-right">
+			<span class="value">42</span>
+			<span class="key">партій</span>
+		</div>
+		<div class="stat pull-right">
+			<span class="value">10</span>
+			<span class="key">забавок</span>
+		</div>
+		<span class="title"><%= user.get('nickname') %></span>
+		<span class="subtitle">
+			<%= user.get('firstName') + ' ' + user.get('lastName') %>
+		</span>
+	</a>
+	<% }); %>
+</div>

@@ -1,0 +1,25 @@
+<div id="header">
+	<img src="<%= model.get('photoUrl') %>" class="pull-left avatar">
+	<div class="actionLinks pull-right">
+		<a class="delBtn red dark"><span class="glyphicon glyphicon-trash"></span></a>
+		<a class="editBtn"><span class="glyphicon glyphicon-pencil"></span></a>
+	</div>
+	<span class="title"><%= model.get('nickname') %></span>
+	<span class="sub-title"><%= model.get('firstName') + ' ' + model.get('lastName') %></span>
+</div>
+<div id="sub-header">
+	<span>відгуки (23)</span>
+	<span class="action">
+		<span class="glyphicon glyphicon-plus"></span>
+	</span>
+	<span>забавки (12)</span>
+	<span class="action">
+		<span class="glyphicon glyphicon-plus"></span>
+	</span>
+	<span>партії (421)</span>
+	<span class="action">
+		<span class="glyphicon glyphicon-plus"></span>
+	</span>
+</div>
+<div id="content">
+</div>

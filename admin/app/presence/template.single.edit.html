@@ -1,0 +1,39 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-body form-horizontal">
+			<div id="user" class="form-group">
+				<label class="col-sm-2 control-label">користувач:</label>
+				<div class="col-sm-9">
+					<select name="userId" class="form-control"></select>
+				</div>
+			</div>
+			<div id="gamingDay" class="form-group">
+				<label class="col-sm-2 control-label">день:</label>
+				<div class="col-sm-9">
+					<select class="form-control"></select>
+				</div>
+			</div>
+			<div id="time" class="form-group">
+				<label class="col-sm-2 control-label">time:</label>
+				<div class="col-sm-4">
+					<div id="from" class="input-group date">
+						<input name="timeFrom" class="form-control" type="text">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+				</div>
+				<label class="col-sm-1 text-center" style="padding-top: 6px;">to</label>
+				<div class="col-sm-4">
+					<div id="to" class="input-group date">
+						<input name="timeTo" class="form-control" type="text">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">скасувати</button>
+			<button type="button" class="btn btn-danger delBtn">видалити</button>
+			<button type="button" class="btn btn-primary saveBtn">зберегти</button>
+		</div>
+	</div>
+</div>

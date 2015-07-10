@@ -1,8 +1,9 @@
-define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker'], function ($, _, Backbone, momentLib, datetimepicker) {
+define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'text!days/template.single.edit.html'],
+	function ($, _, Backbone, momentLib, datetimepicker, Template) {
 
 	var EditView = Backbone.View.extend({
 		el: $('#main'),
-		template: _.template( $('#days-edit-template').html() ),
+		template: _.template(Template),
 		events: {
 			'click .saveBtn'	: 'saveEntity',
 			'click .cancelBtn'	: 'cancel'

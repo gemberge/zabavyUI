@@ -1,0 +1,21 @@
+<a href="#users/<%= user.id %>">
+	<img src="<%= user.photoUrl %>" class="img-rounded" style="height: 40px; margin: -10px 5px -10px -15px">
+	<%= user.nickname %>
+</a>
+<a class="delScoreBtn pull-right clickable em2" style="margin: -5px -5px 0 15px; color: #D9534F">
+	<span class="glyphicon glyphicon-trash"></span>
+</a>
+<% if(win) { %>
+<div class="btn-group pull-right" data-toggle="buttons">
+	<label class="btn btn-success btn-win active">
+		<input name="win" type="checkbox" autocomplete="off" checked> перемога
+	</label>
+</div>
+<% } else { %>
+<div class="btn-group pull-right" data-toggle="buttons">
+	<label class="btn btn-success btn-win">
+		<input name="win" type="checkbox" autocomplete="off"> перемога
+	</label>
+</div>
+<% } %>
+<input name="points" type="text" class="form-control pull-right" value="<%= points %>" style="width: 75px; margin: -7px 5px 0 0;">

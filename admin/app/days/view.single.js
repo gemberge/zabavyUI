@@ -1,13 +1,13 @@
-define(['jquery', 'underscore', 'backbone', 'moment',
+define(['jquery', 'underscore', 'backbone', 'moment', 'text!days/template.single.html',
 		'presence/model', 'presence/collection', 'presence/view.single.embedded.event', 'presence/view.single.edit',
 		'matches/model', 'matches/collection', 'matches/view.single.embedded.event', 'matches/view.single.edit', 'scores/collection'],
-	function ($, _, Backbone, momentLib,
+	function ($, _, Backbone, momentLib, Template,
 		PresenceModel, PresenceCollection, PresenceEmbeddedInEventView, PresenceEditView,
 		MatchModel, MatchesCollection, MatchEmbeddedInEventView, MatchEditView, ScoresCollection) {
 
 	var SingleView = Backbone.View.extend({
 		el: $('#main'),
-		template: _.template( $('#days-single-template').html() ),
+		template: _.template(Template),
 		events: {
 			'click .editBtn'	: 'editEntity',
 			'click .delBtn'		: 'deleteEntity',

@@ -1,11 +1,11 @@
-define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 'bloodhoundSources',
+define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 'bloodhoundSources', 'text!matches/template.single.edit.html',
 		'scores/model', 'scores/collection', 'scores/view.list.embedded.match', 'days/collection', 'gameboxes/collection', 'gameboxes/collection.addons'],
-	function ($, _, Backbone, Bootstrap, toggle, Typeahead, sources,
+	function ($, _, Backbone, Bootstrap, toggle, Typeahead, sources, Template,
 			  ScoreModel, ScoresCollection, ScoresListEmbeddedInMatchView, DaysCollection, GameboxesCollection, AddonsCollection) {
 
 		var View = Backbone.View.extend({
 			el: $('#modal'),
-			template: _.template( $('#template-single-edit-match').html() ),
+			template: _.template(Template),
 			events: {
 				'change #mainGamebox select': 'mainGameboxChanged',
 				'click .saveBtn'	: 'saveEntity',

@@ -1,8 +1,9 @@
-define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/model'], function ($, _, Backbone, Gameboxes, Gamebox) {
+define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/model', 'text!gameboxes/template.single.edit.html'],
+	function ($, _, Backbone, Gameboxes, Model, Template) {
 
 	var SingleEditView = Backbone.View.extend({
 		el: $('#main'),
-		template: _.template( $('#template-single-edit-gameboxes').html() ),
+		template: _.template(Template),
 		events: {
 			'change input[name="isAddon"]' : 'showParentSelector',
 			'click .saveBtn'	: 'saveEntity',

@@ -1,8 +1,9 @@
-define(['jquery', 'underscore', 'backbone', 'gameboxes/collection.addons', 'gameboxes/model'], function ($, _, Backbone, Addons, Gamebox) {
+define(['jquery', 'underscore', 'backbone', 'gameboxes/collection.addons', 'gameboxes/model', 'text!gameboxes/template.single.html'],
+	function ($, _, Backbone, Addons, Model, Template) {
 
 	var SingleView = Backbone.View.extend({
 		el: $('#main'),
-		template: _.template( $('#template-single-gameboxes').html() ),
+		template: _.template(Template),
 		events: {
 			'click .editBtn': 'editEntity',
 			'click .delBtn'	: 'deleteEntity'
@@ -18,7 +19,7 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection.addons', 'game
 				addons.fetch({
 					success: function (collection, data) {
 						if(addons.length > 0) {
-							gameboxView.$el.html( gameboxView.template({ model: gameboxView.model, addons: addons.models }) );
+							gameboxView.$el.html( gameboxView.template({ model: gameboxView.model, addons: collection.models }) );
 						} else {
 							gameboxView.$el.html( gameboxView.template({ model: gameboxView.model, addons: null }) );
 						}

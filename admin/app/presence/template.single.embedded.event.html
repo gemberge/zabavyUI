@@ -1,0 +1,18 @@
+<% if(timeTo == 0) {%>
+<div class="stat clickable pull-right goOut" style="padding: 0 10px">
+	<span class="glyphicon glyphicon-log-out em2"></span>
+</div>
+<% }else{ %>
+<div class="stat clickable pull-right editView">
+	<span class="value"><%= moment.duration(timeTo-timeFrom).hours() %>:<%= moment.duration(timeTo-timeFrom).minutes() %></span>
+	<span class="key">тривалість</span>
+</div>
+<% } %>
+<div class="stat clickable pull-right editView">
+	<span class="value"><%= moment(timeFrom).format('HH:mm') %></span>
+	<span class="key">прибуття</span>
+</div>
+<span class="avatar pull-left">
+	<a href="#users/<%= user.id %>"><img src="<%= user.photoUrl %>" class="img-rounded"></a>
+</span>
+<span class="megatitle"><a href="#users/<%= user.id %>"><%= user.nickname %></a></span>
