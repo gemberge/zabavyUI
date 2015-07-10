@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="uk">
+	<head>
+		<meta charset="utf-8">
+		<title>Godlike: Zabavy</title>
+		<link href="/rsc/admin/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/rsc/admin/assets/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+		<link href="/rsc/admin/assets/bootstrap-toggle/bootstrap-toggle.min.css" rel="stylesheet">
+		<link href="/rsc/admin/css/style.css" rel="stylesheet">
+		<link href="/rsc/admin/img/favicon.ico" rel="icon"/>
+	</head>
+	<body>
+		<div id="container">
+			<div id="sidebar">
+				<div id="slogan">
+					забави.club
+				</div>
+				<input id="search" class="form-control" placeholder="пошук усього сущого" type="text">
+				<div id="menu">
+					<a href="#gameboxes">забавки</a>
+					<a href="#users">люд</a>
+					<a href="#clubs" class="inactive">клуби</a>
+					<a href="#days">здибанки</a>
+					<a href="#blog" class="inactive">писанина</a>
+				</div>
+			</div>
+			<div id="main"></div>
+			<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+		</div>
+
+		<script type="text/template" id="days-list-template">
+			<div id="header">
+				<div class="actionLinks pull-right">
+					<a href="#/days/new" class="green"><span class="glyphicon glyphicon-plus"></span></a>
+					<a><span class="glyphicon glyphicon-sort"></span></a>
+					<a><span class="glyphicon glyphicon-filter"></span></a>
+				</div>
+			</div>
+			<div class="super-list">
+				<% _.each(collection.models, function(day) { %>
+				<a href="#days/<%= day.get('id') %>" class="super-list-item">
+					<div class="stat pull-right">
+						<span class="value">21</span>
+						<span class="key">людей</span>
+					</div>
+					<div class="stat pull-right">
+						<span class="value">42</span>
+						<span class="key">партій</span>
+					</div>
+					<div class="stat pull-right">
+						<span class="value">
+							<%= moment.duration(day.get('endTime') - day.get('startTime')).hours() %>:<%= moment.duration(day.get('endTime') - day.get('startTime')).minutes() %>
+						</span>
+						<span class="key">тривалість</span>
+					</div>
+					<span class="title"><%= day.get('title') %></span>
+					<span class="subtitle">
+						<%= moment(day.get('startTime')).format('HH:mm, DD.MM.YYYY') %>
+					</span>
+				</a>
+				<% }); %>
+			</div>
+		</script>
+
+		<script type="text/template" id="days-single-template">
+			<div id="header">
+				<div class="actionLinks pull-right">
+					<a class="delBtn red dark"><span class="glyphicon glyphicon-trash"></span></a>
+					<a class="editBtn"><span class="glyphicon glyphicon-pencil"></span></a>
+				</div>
+				<span class="title"><%= model.get('title') %></span>
+			</div>
+			<div id="sub-header">
+				<span class="presenceList">люд (14)</span>
+				<span class="action presenceNew">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span class="matchList">партії (21)</span>
+				<span class="action matchNew">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+			</div>
+			<div id="content">
+				<div class="col-sm-10 col-sm-offset-1 text-justify">
+					з <b><%= moment(model.get('startTime')).format('HH:mm, DD.MM.YYYY') %></b>
+					до <b><%= moment(model.get('endTime')).format('HH:mm, DD.MM.YYYY') %></b>
+				</div>
+				<div class="col-sm-10 col-sm-offset-1 text-justify">
+					<%= model.get('description') %>
+				</div>
+			</div>
+		</script>
+
+		<script type="text/template" id="days-edit-template">
+			<div id="header">
+				<div class="actionLinks pull-right">
+					<a class="saveBtn green"><span class="glyphicon glyphicon-ok"></span></a>
+					<a class="cancelBtn red dark"><span class="glyphicon glyphicon-remove"></span></a>
+				</div>
+			</div>
+			<div id="content" class="form-horizontal">
+				<div id="title" class="form-group">
+					<label class="col-sm-2 control-label">title:</label>
+					<div class="col-sm-9">
+						<input name="title" type="text" class="form-control" placeholder="Something original" value="<%= model.get('title') %>">
+					</div>
+				</div>
+				<div id="description" class="form-group">
+					<label class="col-sm-2 control-label">description:</label>
+					<div class="col-sm-9">
+						<textarea name="description" class="form-control" rows="6" placeholder="Some description"><%= model.get('description') %></textarea>
+					</div>
+				</div>
+				<div id="time" class="form-group">
+					<label class="col-sm-2 control-label">time:</label>
+					<div class="col-sm-4">
+						<div class="input-group date">
+							<input name="startTime" class="form-control" type="text">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
+					<label class="col-sm-1 text-center" style="padding-top: 6px;">to</label>
+					<div class="col-sm-4">
+						<div class="input-group date">
+							<input name="endTime" class="form-control" type="text">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<script type="text/template" id="template-list-users">
+			<div id="header">
+				<div class="actionLinks pull-right">
+					<a href="#/users/new" class="green"><span class="glyphicon glyphicon-plus"></span></a>
+					<a><span class="glyphicon glyphicon-sort"></span></a>
+					<a><span class="glyphicon glyphicon-filter"></span></a>
+				</div>
+			</div>
+			<div class="super-list">
+				<% _.each(collection.models, function(user) { %>
+				<a href="#users/<%= user.get('id') %>" class="super-list-item">
+					<span class="avatar pull-left">
+						<img src="<%= user.get('photoUrl') %>" class="img-rounded">
+					</span>
+					<div class="stat pull-right">
+						<span class="value">21</span>
+						<span class="key">здибанок</span>
+					</div>
+					<div class="stat pull-right">
+						<span class="value">42</span>
+						<span class="key">партій</span>
+					</div>
+					<div class="stat pull-right">
+						<span class="value">10</span>
+						<span class="key">забавок</span>
+					</div>
+					<span class="title"><%= user.get('nickname') %></span>
+					<span class="subtitle">
+						<%= user.get('firstName') + ' ' + user.get('lastName') %>
+					</span>
+				</a>
+				<% }); %>
+			</div>
+		</script>
+
+		<script type="text/template" id="template-single-users">
+			<div id="header">
+				<img src="<%= model.get('photoUrl') %>" class="pull-left avatar">
+				<div class="actionLinks pull-right">
+					<a class="delBtn red dark"><span class="glyphicon glyphicon-trash"></span></a>
+					<a class="editBtn"><span class="glyphicon glyphicon-pencil"></span></a>
+				</div>
+				<span class="title"><%= model.get('nickname') %></span>
+				<span class="sub-title"><%= model.get('firstName') + ' ' + model.get('lastName') %></span>
+			</div>
+			<div id="sub-header">
+				<span>відгуки (23)</span>
+				<span class="action">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span>забавки (12)</span>
+				<span class="action">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span>партії (421)</span>
+				<span class="action">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+			</div>
+			<div id="content">
+			</div>
+		</script>
+
+		<script type="text/template" id="template-single-edit-users">
+			<div id="header">
+				<div class="actionLinks pull-right">
+					<a class="saveBtn green"><span class="glyphicon glyphicon-ok"></span></a>
+					<a class="cancelBtn red dark"><span class="glyphicon glyphicon-remove"></span></a>
+				</div>
+			</div>
+			<div id="content" class="form-horizontal">
+				<div id="firstName" class="form-group">
+					<label class="col-sm-2 control-label">ім'я:</label>
+					<div class="col-sm-9">
+						<input name="firstName" type="text" class="form-control" value="<%= model.get('firstName') %>">
+					</div>
+				</div>
+				<div id="lastName" class="form-group">
+					<label class="col-sm-2 control-label">прізвище:</label>
+					<div class="col-sm-9">
+						<input name="lastName" type="text" class="form-control" value="<%= model.get('lastName') %>">
+					</div>
+				</div>
+				<div id="nickname" class="form-group">
+					<label class="col-sm-2 control-label">псевдо:</label>
+					<div class="col-sm-9">
+						<input name="nickname" type="text" class="form-control" value="<%= model.get('nickname') %>">
+					</div>
+				</div>
+				<div id="photoUrl" class="form-group">
+					<label class="col-sm-2 control-label">фото:</label>
+					<div class="col-sm-9">
+						<input name="photoUrl" type="text" class="form-control" value="<%= model.get('photoUrl') %>">
+					</div>
+				</div>
+				<div id="role" class="form-group">
+					<label class="col-sm-2 control-label">роль:</label>
+					<div class="col-sm-9">
+						<select name="role" class="form-control">
+							<option value="USER" <%if(model.get('role') == 'USER'){%>selected<%}%> >Користувач</option>
+							<option value="MODER" <%if(model.get('role') == 'MODER'){%>selected<%}%> >Модератор</option>
+							<option value="ADMIN" <%if(model.get('role') == 'ADMIN'){%>selected<%}%> >Адміністратор</option>
+						</select>
+					</div>
+				</div>
+				<div id="createdAt" class="form-group">
+					<label class="col-sm-2 control-label">time:</label>
+					<div class="col-sm-4">
+						<div class="input-group date">
+							<input name="createdAt" class="form-control" type="text">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<script type="text/template" id="template-single-edit-presence">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body form-horizontal">
+						<div id="user" class="form-group">
+							<label class="col-sm-2 control-label">користувач:</label>
+							<div class="col-sm-9">
+								<select name="userId" class="form-control"></select>
+							</div>
+						</div>
+						<div id="gamingDay" class="form-group">
+							<label class="col-sm-2 control-label">день:</label>
+							<div class="col-sm-9">
+								<select class="form-control"></select>
+							</div>
+						</div>
+						<div id="time" class="form-group">
+							<label class="col-sm-2 control-label">time:</label>
+							<div class="col-sm-4">
+								<div id="from" class="input-group date">
+									<input name="timeFrom" class="form-control" type="text">
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+								</div>
+							</div>
+							<label class="col-sm-1 text-center" style="padding-top: 6px;">to</label>
+							<div class="col-sm-4">
+								<div id="to" class="input-group date">
+									<input name="timeTo" class="form-control" type="text">
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">скасувати</button>
+						<button type="button" class="btn btn-danger delBtn">видалити</button>
+						<button type="button" class="btn btn-primary saveBtn">зберегти</button>
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<script type="text/template" id="template-single-embedded-event-presence">
+			<% if(timeTo == 0) {%>
+			<div class="stat clickable pull-right goOut" style="padding: 0 10px">
+				<span class="glyphicon glyphicon-log-out em2"></span>
+			</div>
+			<% }else{ %>
+			<div class="stat clickable pull-right editView">
+				<span class="value"><%= moment.duration(timeTo-timeFrom).hours() %>:<%= moment.duration(timeTo-timeFrom).minutes() %></span>
+				<span class="key">тривалість</span>
+			</div>
+			<% } %>
+			<div class="stat clickable pull-right editView">
+				<span class="value"><%= moment(timeFrom).format('HH:mm') %></span>
+				<span class="key">прибуття</span>
+			</div>
+			<span class="avatar pull-left">
+				<a href="#users/<%= user.id %>"><img src="<%= user.photoUrl %>" class="img-rounded"></a>
+			</span>
+			<span class="megatitle"><a href="#users/<%= user.id %>"><%= user.nickname %></a></span>
+		</script>
+
+		<script type="text/template" id="template-list-gameboxes">
+			<div id="header">
+				<div class="actionLinks pull-right">
+					<a href="#/gameboxes/new" class="green"><span class="glyphicon glyphicon-plus"></span></a>
+					<a><span class="glyphicon glyphicon-sort"></span></a>
+					<a><span class="glyphicon glyphicon-filter"></span></a>
+				</div>
+			</div>
+			<div class="super-list">
+				<% _.each(collection.models, function(gamebox) { %>
+				<a href="#gameboxes/<%= gamebox.get('id') %>" class="super-list-item">
+					<div class="stat pull-right">
+						<span class="value">73</span>
+						<span class="key">відгуки</span>
+					</div>
+					<div class="stat pull-right">
+						<span class="value">42</span>
+						<span class="key">партії</span>
+					</div>
+					<div class="stat pull-right">
+						<span class="value">21</span>
+						<span class="key">власник</span>
+					</div>
+					<div class="stat pull-right">
+						<span class="value">3</span>
+						<span class="key">доповнення</span>
+					</div>
+					<span class="title"><%= gamebox.get('ukTitle') %></span>
+					<span class="subtitle">
+						<b><%= gamebox.get('mink') + '-' + gamebox.get('maxk') %></b> гравців,
+						<b><%= gamebox.get('minTime') + '-' + gamebox.get('maxTime') %></b> хвилин
+					</span>
+				</a>
+				<% }); %>
+			</div>
+		</script>
+
+		<script type="text/template" id="template-single-gameboxes">
+			<div id="header">
+				<div class="actionLinks pull-right">
+					<a class="delBtn red dark"><span class="glyphicon glyphicon-trash"></span></a>
+					<a class="editBtn"><span class="glyphicon glyphicon-pencil"></span></a>
+				</div>
+				<span class="title"><%= model.get('ukTitle') %> <span class="muted">/ <%= model.get('enTitle') %></span></span>
+			</div>
+			<div id="sub-header">
+				<span>фото (121)</span>
+				<span class="action">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span>відгуки (73)</span>
+				<span class="action">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span>власники (12)</span>
+				<span class="action">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span>партії (421)</span>
+				<span class="action">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+			</div>
+			<div id="content">
+				<div class="col-sm-10 col-sm-offset-1 text-justify">
+					від <b><%= model.get('mink') %></b> до <b><%= model.get('maxk') %></b> гравців
+				</div>
+				<div class="col-sm-10 col-sm-offset-1 text-justify">
+					від <b><%= model.get('minTime') %></b> до <b><%= model.get('maxTime') %></b> хвилин бавитись
+				</div>
+				<% if(model.get('parent') != null) { %>
+				<div class="col-sm-10 col-sm-offset-1 text-justify">
+					є доповненням до <a href="#gameboxes/<%= model.get('parent').id %>"><b><%= model.get('parent').ukTitle %></b></a>
+				</div>
+				<% } %>
+				<% if(addons != null) { %>
+				<div class="col-sm-10 col-sm-offset-1 text-justify">
+					доповнення до цієї забавки:
+					<% _.each(addons, function(addon) { %>
+					<a href="#gameboxes/<%= addon.get('id') %>"><b><%= addon.get('ukTitle') %></b></a>,
+					<% }); %>
+				</div>
+				<% } %>
+				<div class="col-sm-10 col-sm-offset-1 text-justify">
+					<%= model.get('description') %>
+				</div>
+			</div>
+		</script>
+
+		<script type="text/template" id="template-single-edit-gameboxes">
+			<div id="header">
+				<div class="actionLinks pull-right">
+					<a class="saveBtn green"><span class="glyphicon glyphicon-ok"></span></a>
+					<a class="cancelBtn red dark"><span class="glyphicon glyphicon-remove"></span></a>
+				</div>
+			</div>
+			<div id="sub-header">
+				<span class="presenceList">назва</span>
+				<span class="action presenceNew">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span class="matchList">доповнення</span>
+				<span class="action matchNew">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span class="presenceList">фото</span>
+				<span class="action presenceNew">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span class="matchList">деталі</span>
+				<span class="action matchNew">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span class="presenceList">замануха</span>
+				<span class="action presenceNew">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span class="matchList">опис</span>
+				<span class="action matchNew">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+				<span class="presenceList">правила</span>
+				<span class="action presenceNew">
+					<span class="glyphicon glyphicon-plus"></span>
+				</span>
+			</div>
+			<div id="content" class="form-horizontal">
+				<div id="ukTitle" class="form-group">
+					<label class="col-sm-2 control-label">назва:</label>
+					<div class="col-sm-9">
+						<input name="ukTitle" type="text" class="form-control" value="<%= model.get('ukTitle') %>" placeholder="назва українською мовою">
+					</div>
+				</div>
+				<div id="enTitle" class="form-group">
+					<label class="col-sm-2 control-label">title:</label>
+					<div class="col-sm-9">
+						<input name="enTitle" type="text" class="form-control" value="<%= model.get('enTitle') %>" placeholder="назва англійською мовою">
+					</div>
+				</div>
+				<div id="numbers" class="form-group">
+					<label class="col-sm-2 control-label">гравців:</label>
+					<div class="col-sm-3">
+						<div class="col-sm-6" style="margin-left: -15px;">
+							<input name="mink" type="text" class="form-control" value="<%= model.get('mink') %>">
+						</div>
+						<div class="col-sm-6">
+							<input name="maxk" type="text" class="form-control" value="<%= model.get('maxk') %>">
+						</div>
+					</div>
+					<label class="col-sm-2 control-label" style="margin-left: 15px;">тривалість:</label>
+					<div class="col-sm-4">
+						<div class="col-sm-6">
+							<input name="minTime" type="text" class="form-control" value="<%= model.get('minTime') %>">
+						</div>
+						<div class="col-sm-6">
+							<input name="maxTime" type="text" class="form-control" value="<%= model.get('maxTime') %>">
+						</div>
+					</div>
+				</div>
+				<div id="cover" class="form-group">
+					<label class="col-sm-2 control-label">фото:</label>
+					<div class="col-sm-9"><p class="form-control-static text-muted">завантаження буде потім</p></div>
+				</div>
+				<div id="parent" class="form-group">
+					<div class="col-sm-4 col-sm-offset-2">
+						<div class="checkbox">
+							<label>
+								<input name="isAddon" type="checkbox"> є доповненням до
+							</label>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<select name="parentId" class="form-control">
+							<% _.each(parents.models, function(gamebox) { %>
+							<option value="<%= gamebox.get('id') %>" <%if(model.get('parent')) if(gamebox.get('id') == model.get('parent').id){%>selected<%}%> >
+								<%= gamebox.get('ukTitle') %>
+							</option>
+							<%});%>
+						</select>
+					</div>
+				</div>
+				<div id="description" class="form-group">
+					<label class="col-sm-2 control-label">опис:</label>
+					<div class="col-sm-9">
+						<textarea name="description" class="form-control" rows="6"><%= model.get('description') %></textarea>
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<script type="text/template" id="template-single-edit-match">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">тип:</label>
+							<div class="col-sm-4">
+								<input name="tutorial" type="checkbox" data-toggle="toggle" data-on="навчальна" data-off="звичайна" <% if(tutorial){%>checked<%}%> >
+							</div>
+							<label class="col-sm-2 control-label">перемога:</label>
+							<div class="col-sm-3">
+								<select name="winType" class="form-control">
+									<option value="POINTS" <% if(winType == 'POINTS'){%>selected<%}%> > за балами </option>
+									<option value="BINARY" <% if(winType == 'BINARY'){%>selected<%}%> > бінарна</option>
+								</select>
+							</div>
+						</div>
+						<div id="event" class="form-group">
+							<label class="col-sm-2 control-label">день:</label>
+							<div class="col-sm-9">
+								<select name="eventId" class="form-control"></select>
+							</div>
+						</div>
+						<div id="mainGamebox" class="form-group">
+							<label class="col-sm-2 control-label">забавка:</label>
+							<div class="col-sm-9">
+								<select name="mainGameboxId" class="form-control"></select>
+							</div>
+						</div>
+						<div id="additionalGameboxes" class="form-group">
+							<label class="col-sm-2 control-label">доповнення:</label>
+							<div class="col-sm-9">
+								<p class='form-control-static'> завантажується </p>
+							</div>
+						</div>
+						<div id="newPlayer" class="form-group">
+							<label class="col-sm-2 control-label">гравці:</label>
+							<div class="col-sm-9">
+								<input name="newPlayer" type="text" class="form-control" placeholder="додавання нового гравця">
+							</div>
+						</div>
+						<div id="scores" class="form-group">
+							<div class="col-sm-9 col-sm-offset-2"></div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">скасувати</button>
+						<button type="button" class="btn btn-info cloneBtn">клонувати</button>
+						<button type="button" class="btn btn-danger delBtn">видалити</button>
+						<button type="button" class="btn btn-primary saveBtn">зберегти</button>
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<script type="text/template" id="template-single-embedded-event-match">
+			<span class="players pull-right">
+				<img src="/rsc/admin/img/preloader.gif">
+			</span>
+			<span class="megatitle pull-left" style="margin-right: 10px">
+				в <%= mainGamebox.ukTitle %>
+			</span>
+			<span class="title">
+				<% if(additionalGameboxes.length > 0) { %>
+				<span class="label label-primary small">+<%= additionalGameboxes.length %></span>
+				<% } %>
+			</span>
+			<span class="subtitle">
+				<% if(tutorial) { %>
+				<span class="label label-success small">навчальна</span>
+				<% } %>
+			</span>
+		</script>
+
+		<script type="text/template" id="template-single-embedded-match-scores">
+			<a href="#users/<%= user.id %>">
+				<img src="<%= user.photoUrl %>" class="img-rounded" style="height: 40px; margin: -10px 5px -10px -15px">
+				<%= user.nickname %>
+			</a>
+			<a class="delScoreBtn pull-right clickable em2" style="margin: -5px -5px 0 15px; color: #D9534F">
+				<span class="glyphicon glyphicon-trash"></span>
+			</a>
+			<% if(win) { %>
+			<div class="btn-group pull-right" data-toggle="buttons">
+				<label class="btn btn-success btn-win active">
+					<input name="win" type="checkbox" autocomplete="off" checked> перемога
+				</label>
+			</div>
+			<% } else { %>
+			<div class="btn-group pull-right" data-toggle="buttons">
+				<label class="btn btn-success btn-win">
+					<input name="win" type="checkbox" autocomplete="off"> перемога
+				</label>
+			</div>
+			<% } %>
+			<input name="points" type="text" class="form-control pull-right" value="<%= points %>" style="width: 75px; margin: -7px 5px 0 0;">
+		</script>
+
+		<script src="/rsc/admin/assets/underscore/underscore-min.js"></script>
+		<script src="/rsc/admin/assets/jquery/jquery-2.1.3.min.js"> </script>
+		<script src="/rsc/admin/assets/backbone/backbone-min.js"></script>
+		<script src="/rsc/admin/assets/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/rsc/admin/assets/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+		<script src="/rsc/admin/assets/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+		<script src="/rsc/admin/assets/moment/moment.min.js"></script>
+		<script src="/rsc/admin/assets/typeahead/typeahead.jquery.min.js"></script>
+		<script src="/rsc/admin/assets/typeahead/bloodhound.min.js"></script>
+
+		<script src="/rsc/admin/modules/app.js"></script>
+		<script src="/rsc/admin/modules/gameboxes/model.js"></script>
+		<script src="/rsc/admin/modules/gameboxes/collection.js"></script>
+		<script src="/rsc/admin/modules/gameboxes/collection.addons.js"></script>
+		<script src="/rsc/admin/modules/gameboxes/view.list.js"></script>
+		<script src="/rsc/admin/modules/gameboxes/view.single.js"></script>
+		<script src="/rsc/admin/modules/gameboxes/view.single.edit.js"></script>
+		<script src="/rsc/admin/modules/days/day-model.js"></script>
+		<script src="/rsc/admin/modules/days/days-collection.js"></script>
+		<script src="/rsc/admin/modules/days/days-list-view.js"></script>
+		<script src="/rsc/admin/modules/days/days-single-view.js"></script>
+		<script src="/rsc/admin/modules/days/days-edit-view.js"></script>
+		<script src="/rsc/admin/modules/users/model.js"></script>
+		<script src="/rsc/admin/modules/users/collection.js"></script>
+		<script src="/rsc/admin/modules/users/view.list.js"></script>
+		<script src="/rsc/admin/modules/users/view.single.js"></script>
+		<script src="/rsc/admin/modules/users/view.single.edit.js"></script>
+		<script src="/rsc/admin/modules/presence/model.js"></script>
+		<script src="/rsc/admin/modules/presence/collection.js"></script>
+		<script src="/rsc/admin/modules/presence/view.single.edit.js"></script>
+		<script src="/rsc/admin/modules/presence/view.single.embedded.event.js"></script>
+		<script src="/rsc/admin/modules/matches/model.js"></script>
+		<script src="/rsc/admin/modules/matches/collection.js"></script>
+		<script src="/rsc/admin/modules/matches/view.single.edit.js"></script>
+		<script src="/rsc/admin/modules/matches/view.single.embedded.event.js"></script>
+		<script src="/rsc/admin/modules/scores/model.js"></script>
+		<script src="/rsc/admin/modules/scores/collection.js"></script>
+		<!--<script src="/rsc/admin/modules/scores/view.single.edit.js"></script>-->
+		<script src="/rsc/admin/modules/scores/view.single.embedded.match.js"></script>
+		<script src="/rsc/admin/modules/scores/view.list.embedded.match.js"></script>
+		<script src="/rsc/admin/modules/router.js"></script>
+		<script src="/rsc/admin/modules/starter.js"></script>
+
+	</body>
+</html>
