@@ -1,20 +1,14 @@
-window.App = {
-	Models: {},
-	Collections: {},
-	Views: {},
-	Router: {},
-	Data: {
-		Sources: {}
-	}
-};
+define(['jquery', 'underscore', 'backbone', 'gameboxes/router', 'users/router', 'days/router'],
+	function ($, _, Backbone, GameboxesRouter, UsersRouter, DaysRouter) {
 
-App.Data.Sources.users = new Bloodhound({
-	datumTokenizer: Bloodhound.tokenizers.whitespace,
-	queryTokenizer: Bloodhound.tokenizers.whitespace,
-	remote: {
-		url: '/api/users?name=',
-		replace: function(url, query) {
-			return url + query;
-		}
-	}
+	var initialize = function () {
+		new UsersRouter();
+		new GameboxesRouter();
+		new DaysRouter();
+		Backbone.history.start();
+	};
+
+	return {
+		initialize: initialize
+	};
 });

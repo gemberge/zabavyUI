@@ -1,8 +1,8 @@
-define(['jquery', 'underscore', 'backbone'], function ($, _, Backbone) {
+define(['jquery', 'underscore', 'backbone', 'moment'], function ($, _, Backbone, momentLib) {
 
 	var ViewList = Backbone.View.extend({
 		el: $('#main'),
-		template: _.template( $('#template-list-users').html() ),
+		template: _.template( $('#days-list-template').html() ),
 		render: function(data) {
 			this.$el.html( this.template(data) );
 		}
