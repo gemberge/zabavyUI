@@ -47,7 +47,7 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'text!days/template.single
 		},
 		presenceList: function() {
 			var dayView = this;
-			$('#content').html('<div class="super-list" style="margin: -15px;"></div>');
+			$('#content').html('<div class="super-list"></div>');
 			var presenceList = new PresenceCollection();
 			presenceList.fetch({
 				data: {dayId: dayView.model.get('id')},
@@ -71,7 +71,7 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'text!days/template.single
 		},
 		matchList: function() {
 			var dayView = this;
-			$('#content').html('<div class="super-list" style="margin: -15px;"></div>');
+			$('#content').html('<div class="super-list"></div>');
 			var matchList = new MatchesCollection();
 			matchList.fetch({
 				data: {eventId: dayView.model.get('id')},

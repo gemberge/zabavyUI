@@ -1,0 +1,136 @@
+body {
+	background: #161616;
+}
+
+a {
+	color: inherit;
+}
+
+.page {
+	color: #DDD;
+}
+
+.page .form-control {
+	background: #222222;
+	border: 1px solid #161616;
+	color: #CCC;
+}
+
+.page .input-group-addon {
+	background: #161616;
+	color: #CCC;
+	border-color: #161616;
+}
+
+#sidebar {
+	background: #1976D2 url("/rsc/admin/img/gp-blue.jpg");
+	box-shadow: rgba(0, 0, 0, 0.53) 2px 0px 5px;
+}
+
+#sidebar > #slogan {
+	color: #1976D2;
+}
+
+#sidebar #search, #sidebar .twitter-typeahead .tt-hint {
+	background: #313b3d;
+	box-shadow: none;
+	border: none;
+	color: #CCC;
+	opacity: 0;
+}
+
+#sidebar .tt-dataset-autocomplete {
+	background: #313b3d;
+	color: #DDD;
+}
+
+#sidebar .tt-dataset-autocomplete > .tt-suggestion {
+}
+
+#sidebar .twitter-typeahead .tt-hint {
+	color: #3673c5;
+}
+
+#menu {
+}
+
+#menu > a {
+	color: #e8e8e8;
+}
+
+#menu > a.inactive {
+	color: #1976D2;
+}
+
+#page {
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16), 0px 2px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.page.primary {
+	background-color: #222222;
+}
+
+.page.secondary {
+	background-color: #222222;
+}
+
+#page > #header {
+	background: #1976D2;
+	color: #FFF;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px;
+}
+
+#header > .sub-title {
+	color: #CCC;
+}
+
+.actionLinks > a {
+	color: #878DA1;
+}
+
+.actionLinks > a:hover {
+	color: #878DA1;
+}
+
+.actionLinks > a.green {
+	color: #4CAF50;
+}
+
+.actionLinks > a.red.dark {
+	color: #D9534F;
+}
+
+#sub-header {
+	color: #CCC;
+	background: #1976D2;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px;
+}
+
+.super-list > .super-list-item {
+	border-bottom: 1px solid #000;
+}
+
+.super-list > .super-list-item:hover {
+	background: #161616;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px;
+}
+
+.super-list > .super-list-item .megatitle {
+	color: #CCC;
+}
+
+.super-list > .super-list-item .title {
+	color: #CCC;
+}
+
+.super-list > .super-list-item .subtitle {
+	color: #727272;
+}
+
+.super-list > .super-list-item .stat > .key {
+	color: #727272;
+}
+
+.super-list > .super-list-item .stat > .value {
+	color: #CCC;
+}

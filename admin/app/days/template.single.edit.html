@@ -1,35 +1,37 @@
-<div id="header">
+<div id="actions">
 	<div class="actionLinks pull-right">
 		<a class="saveBtn green"><span class="glyphicon glyphicon-ok"></span></a>
 		<a class="cancelBtn red dark"><span class="glyphicon glyphicon-remove"></span></a>
 	</div>
 </div>
-<div id="content" class="form-horizontal">
-	<div id="title" class="form-group">
-		<label class="col-sm-2 control-label">title:</label>
-		<div class="col-sm-9">
-			<input name="title" type="text" class="form-control" placeholder="Something original" value="<%= model.get('title') %>">
-		</div>
-	</div>
-	<div id="description" class="form-group">
-		<label class="col-sm-2 control-label">description:</label>
-		<div class="col-sm-9">
-			<textarea name="description" class="form-control" rows="6" placeholder="Some description"><%= model.get('description') %></textarea>
-		</div>
-	</div>
-	<div id="time" class="form-group">
-		<label class="col-sm-2 control-label">time:</label>
-		<div class="col-sm-4">
-			<div class="input-group date">
-				<input name="startTime" class="form-control" type="text">
-				<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+<div id="page" class="page primary">
+	<div id="content" class="form-horizontal">
+		<div id="title" class="form-group">
+			<label class="col-sm-2 control-label">title:</label>
+			<div class="col-sm-9">
+				<input name="title" type="text" class="form-control" placeholder="Something original" value="<%= model.get('title') %>">
 			</div>
 		</div>
-		<label class="col-sm-1 text-center" style="padding-top: 6px;">to</label>
-		<div class="col-sm-4">
-			<div class="input-group date">
-				<input name="endTime" class="form-control" type="text">
-				<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+		<div id="description" class="form-group">
+			<label class="col-sm-2 control-label">description:</label>
+			<div class="col-sm-9">
+				<textarea name="description" class="form-control" rows="6" placeholder="Some description"><%= model.get('description') %></textarea>
+			</div>
+		</div>
+		<div id="time" class="form-group">
+			<label class="col-sm-2 control-label">time:</label>
+			<div class="col-sm-4">
+				<div class="input-group date">
+					<input name="startTime" class="form-control" type="text">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+			</div>
+			<label class="col-sm-1 text-center" style="padding-top: 6px;">to</label>
+			<div class="col-sm-4">
+				<div class="input-group date">
+					<input name="endTime" class="form-control" type="text">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
 			</div>
 		</div>
 	</div>

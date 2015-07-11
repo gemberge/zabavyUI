@@ -1,98 +1,97 @@
-<div id="header">
+<div id="actions">
 	<div class="actionLinks pull-right">
 		<a class="saveBtn green"><span class="glyphicon glyphicon-ok"></span></a>
 		<a class="cancelBtn red dark"><span class="glyphicon glyphicon-remove"></span></a>
 	</div>
 </div>
-<div id="sub-header">
-	<span class="presenceList">назва</span>
-	<span class="action presenceNew">
-		<span class="glyphicon glyphicon-plus"></span>
-	</span>
-	<span class="matchList">доповнення</span>
-	<span class="action matchNew">
-		<span class="glyphicon glyphicon-plus"></span>
-	</span>
-	<span class="presenceList">фото</span>
-	<span class="action presenceNew">
-		<span class="glyphicon glyphicon-plus"></span>
-	</span>
-	<span class="matchList">деталі</span>
-	<span class="action matchNew">
-		<span class="glyphicon glyphicon-plus"></span>
-	</span>
-	<span class="presenceList">замануха</span>
-	<span class="action presenceNew">
-		<span class="glyphicon glyphicon-plus"></span>
-	</span>
-	<span class="matchList">опис</span>
-	<span class="action matchNew">
-		<span class="glyphicon glyphicon-plus"></span>
-	</span>
-	<span class="presenceList">правила</span>
-	<span class="action presenceNew">
-		<span class="glyphicon glyphicon-plus"></span>
-	</span>
-</div>
-<div id="content" class="form-horizontal">
-	<div id="ukTitle" class="form-group">
-		<label class="col-sm-2 control-label">назва:</label>
-		<div class="col-sm-9">
-			<input name="ukTitle" type="text" class="form-control" value="<%= model.get('ukTitle') %>" placeholder="назва українською мовою">
-		</div>
+<div id="page" class="page secondary">
+	<div id="sub-header">
+		<span class="presenceList">назва</span>
+		<span class="action presenceNew">
+			<span class="glyphicon glyphicon-plus"></span>
+		</span>
+		<span class="matchList">доповнення</span>
+		<span class="action matchNew">
+			<span class="glyphicon glyphicon-plus"></span>
+		</span>
+		<span class="presenceList">фото</span>
+		<span class="action presenceNew">
+			<span class="glyphicon glyphicon-plus"></span>
+		</span>
+		<span class="matchList">деталі</span>
+		<span class="action matchNew">
+			<span class="glyphicon glyphicon-plus"></span>
+		</span>
+		<span class="presenceList">замануха</span>
+		<span class="action presenceNew">
+			<span class="glyphicon glyphicon-plus"></span>
+		</span>
+		<span class="matchList">опис</span>
+		<!--<span class="presenceList">правила</span>-->
+		<!--<span class="action presenceNew">-->
+		<!--<span class="glyphicon glyphicon-plus"></span>-->
+		<!--</span>-->
 	</div>
-	<div id="enTitle" class="form-group">
-		<label class="col-sm-2 control-label">title:</label>
-		<div class="col-sm-9">
-			<input name="enTitle" type="text" class="form-control" value="<%= model.get('enTitle') %>" placeholder="назва англійською мовою">
-		</div>
-	</div>
-	<div id="numbers" class="form-group">
-		<label class="col-sm-2 control-label">гравців:</label>
-		<div class="col-sm-3">
-			<div class="col-sm-6" style="margin-left: -15px;">
-				<input name="mink" type="text" class="form-control" value="<%= model.get('mink') %>">
-			</div>
-			<div class="col-sm-6">
-				<input name="maxk" type="text" class="form-control" value="<%= model.get('maxk') %>">
+	<div id="content" class="form-horizontal">
+		<div id="ukTitle" class="form-group">
+			<label class="col-sm-2 control-label">назва:</label>
+			<div class="col-sm-9">
+				<input name="ukTitle" type="text" class="form-control" value="<%= model.get('ukTitle') %>" placeholder="назва українською мовою">
 			</div>
 		</div>
-		<label class="col-sm-2 control-label" style="margin-left: 15px;">тривалість:</label>
-		<div class="col-sm-4">
-			<div class="col-sm-6">
-				<input name="minTime" type="text" class="form-control" value="<%= model.get('minTime') %>">
-			</div>
-			<div class="col-sm-6">
-				<input name="maxTime" type="text" class="form-control" value="<%= model.get('maxTime') %>">
+		<div id="enTitle" class="form-group">
+			<label class="col-sm-2 control-label">title:</label>
+			<div class="col-sm-9">
+				<input name="enTitle" type="text" class="form-control" value="<%= model.get('enTitle') %>" placeholder="назва англійською мовою">
 			</div>
 		</div>
-	</div>
-	<div id="cover" class="form-group">
-		<label class="col-sm-2 control-label">фото:</label>
-		<div class="col-sm-9"><p class="form-control-static text-muted">завантаження буде потім</p></div>
-	</div>
-	<div id="parent" class="form-group">
-		<div class="col-sm-4 col-sm-offset-2">
-			<div class="checkbox">
-				<label>
-					<input name="isAddon" type="checkbox"> є доповненням до
-				</label>
+		<div id="numbers" class="form-group">
+			<label class="col-sm-2 control-label">гравців:</label>
+			<div class="col-sm-3">
+				<div class="col-sm-6" style="margin-left: -15px;">
+					<input name="mink" type="text" class="form-control" value="<%= model.get('mink') %>">
+				</div>
+				<div class="col-sm-6">
+					<input name="maxk" type="text" class="form-control" value="<%= model.get('maxk') %>">
+				</div>
+			</div>
+			<label class="col-sm-2 control-label" style="margin-left: 15px;">тривалість:</label>
+			<div class="col-sm-4">
+				<div class="col-sm-6">
+					<input name="minTime" type="text" class="form-control" value="<%= model.get('minTime') %>">
+				</div>
+				<div class="col-sm-6">
+					<input name="maxTime" type="text" class="form-control" value="<%= model.get('maxTime') %>">
+				</div>
 			</div>
 		</div>
-		<div class="col-sm-5">
-			<select name="parentId" class="form-control">
-				<% _.each(parents.models, function(gamebox) { %>
-				<option value="<%= gamebox.get('id') %>" <%if(model.get('parent')) if(gamebox.get('id') == model.get('parent').id){%>selected<%}%> >
-				<%= gamebox.get('ukTitle') %>
-				</option>
-				<%});%>
-			</select>
+		<div id="cover" class="form-group">
+			<label class="col-sm-2 control-label">фото:</label>
+			<div class="col-sm-9"><p class="form-control-static text-muted">завантаження буде потім</p></div>
 		</div>
-	</div>
-	<div id="description" class="form-group">
-		<label class="col-sm-2 control-label">опис:</label>
-		<div class="col-sm-9">
-			<textarea name="description" class="form-control" rows="6"><%= model.get('description') %></textarea>
+		<div id="parent" class="form-group">
+			<div class="col-sm-4 col-sm-offset-2">
+				<div class="checkbox">
+					<label>
+						<input name="isAddon" type="checkbox"> є доповненням до
+					</label>
+				</div>
+			</div>
+			<div class="col-sm-5">
+				<select name="parentId" class="form-control">
+					<% _.each(parents.models, function(gamebox) { %>
+					<option value="<%= gamebox.get('id') %>" <%if(model.get('parent')) if(gamebox.get('id') == model.get('parent').id){%>selected<%}%> >
+					<%= gamebox.get('ukTitle') %>
+					</option>
+					<%});%>
+				</select>
+			</div>
+		</div>
+		<div id="description" class="form-group">
+			<label class="col-sm-2 control-label">опис:</label>
+			<div class="col-sm-9">
+				<textarea name="description" class="form-control" rows="6"><%= model.get('description') %></textarea>
+			</div>
 		</div>
 	</div>
 </div>
