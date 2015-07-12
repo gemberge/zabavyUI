@@ -1,10 +1,27 @@
-define(['jquery', 'underscore', 'backbone', 'text!users/template.list.html'], function ($, _, Backbone, Template) {
+define(['jquery', 'underscore', 'backbone', 'text!users/template.list.html', 'text!users/template.cards.html'],
+	function ($, _, Backbone, ListTemplate, CardsTemplate) {
 
 	var ViewList = Backbone.View.extend({
 		el: $('#main'),
-		template: _.template(Template),
+		listTemplate: _.template(ListTemplate),
+		cardsTemplate: _.template(CardsTemplate),
+		events: {
+			'click .cardsViewBtn'	: 'switchToCardsMode',
+			'click .listViewBtn'	: 'switchToListMode'
+		},
+		initialize: function(){
+			$(this.el).off('click', '.cardsViewBtn');
+			$(this.el).off('click', '.listViewBtn');
+		},
 		render: function(data) {
-			this.$el.html( this.template(data) );
+			this.data = data;
+			this.$el.html( this.listTemplate(this.data) );
+		},
+		switchToCardsMode: function () {
+			this.$el.html( this.cardsTemplate(this.data) );
+		},
+		switchToListMode: function () {
+			this.$el.html( this.listTemplate(this.data) );
 		}
 	});
 

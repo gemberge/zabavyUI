@@ -1,0 +1,31 @@
+<div id="actions">
+	<div class="actionLinks pull-left">
+		<a class="cardsViewBtn active"><span class="glyphicon glyphicon-th"></span></a>
+		<a class="listViewBtn clickable"><span class="glyphicon glyphicon-th-list"></span></a>
+	</div>
+	<div class="actionLinks pull-right">
+		<a href="#/users/new" class="green"><span class="glyphicon glyphicon-plus"></span></a>
+		<a><span class="glyphicon glyphicon-sort"></span></a>
+		<a><span class="glyphicon glyphicon-filter"></span></a>
+	</div>
+</div>
+<div style="margin: -10px">
+	<% _.each(collection.models, function(user) { %>
+	<div class="card user primary shadowed">
+		<img src="<%= user.get('photoUrl') %>" class="img-circle">
+		<a href="#users/<%= user.get('id') %>" class="title">
+			<%= user.get('nickname') %>
+		</a>
+		<div class="card-footer">
+			<div class="stat col-sm-6">
+				<span class="glyphicon glyphicon-fire pull-left"></span>
+				<b>42</b>
+			</div>
+			<div class="stat col-sm-6">
+				<span class="glyphicon glyphicon-briefcase pull-left"></span>
+				<b>10</b>
+			</div>
+		</div>
+	</div>
+	<% }); %>
+</div>
