@@ -92,6 +92,28 @@ body {
 	color: #1976D2;
 }
 
+.changeSideBtn {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	font-size: 1.5em;
+	color: #878DA1;
+	text-shadow: 1px 1px 2px rgba(0,66,65,0.8);
+	padding: 0 10px 0 5px;
+}
+
+#chooseLight {
+	display: none;
+}
+
+#chooseDark {
+	display: block;
+}
+
+#chooseDark > span{
+	color: #222222;
+}
+
 #actions {
 	height: 50px;
 	width: 100%;
