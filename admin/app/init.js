@@ -10,7 +10,8 @@ require.config({
 		toggle			: '../assets/bootstrap-toggle/bootstrap-toggle.min',
 		moment			: '../assets/moment/moment.min',
 		typeahead		: '../assets/typeahead/typeahead.jquery.min',
-		bloodhound		: '../assets/typeahead/bloodhound.min'
+		bloodhound		: '../assets/typeahead/bloodhound.min',
+		jsCookie		: '../assets/js.cookie/js.cookie'
 	},
 	shim: {
 		bootstrap: {
