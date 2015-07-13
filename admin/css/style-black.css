@@ -28,7 +28,7 @@ a {
 }
 
 #sidebar > #slogan {
-	color: #1976D2;
+	/*color: #1976D2;*/
 }
 
 #sidebar #search, #sidebar .twitter-typeahead .tt-hint {

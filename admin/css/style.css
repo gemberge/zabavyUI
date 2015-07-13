@@ -1,4 +1,9 @@
+html {
+	height: 100%;
+}
+
 body {
+	height: 100%;
 	background: #E8E9ED;
 }
 
@@ -20,7 +25,6 @@ body {
 #sidebar {
 	text-align: right;
 	padding-top: 50px;
-	min-height: 700px;
 	height: 100%;
 	z-index: 1000;
 	display: block;
@@ -39,6 +43,10 @@ body {
 	color: #EEE;
 	text-shadow: 1px 1px 2px rgba(0,66,65,0.8);
 	text-align: right;
+}
+
+#sidebar > #slogan > span {
+	color: #FFC107;
 }
 
 #sidebar #search, #sidebar .twitter-typeahead .tt-hint {
