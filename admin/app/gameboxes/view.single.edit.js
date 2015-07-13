@@ -5,26 +5,39 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 		el: $('#main'),
 		template: _.template(Template),
 		events: {
-			'change input[name="isAddon"]' : 'showParentSelector',
-			'click .saveBtn'	: 'saveEntity',
-			'click .cancelBtn'	: 'cancel'
+			'change input'			: 'inputChanged',
+			'change textarea' 		: 'inputChanged',
+			'change select' 		: 'inputChanged',
+			'click .step.clickable'	: 'showStep',
+			'click .nextStepBtn'	: 'nextStep',
+			'click .saveBtn'		: 'saveEntity',
+			'click .cancelBtn'		: 'showFinalDialog'
 		},
 		initialize: function(){
-			$(this.el).off('change', 'input[name="isAddon"]');
+			$(this.el).off('change', 'input');
+			$(this.el).off('change', 'textarea');
+			$(this.el).off('change', 'select');
+			$(this.el).off('click', '.step.clickable');
 			$(this.el).off('click', '.saveBtn');
 			$(this.el).off('click', '.cancelBtn');
+			$(this.el).off('click', '.nextStepBtn');
 		},
-		render: function() {
+		render: function(step) {
 			var parents = new Gameboxes();
 			parents.fetch({ async: false, data: {addon: false} });
 			this.$el.html( this.template({ model: this.model, parents: parents }) );
+			if(step) {
+				this.showStep(step);
+			} else {
+				this.showStep("title");
+			}
 		},
 		cancel: function() {
 			window.history.back();
 		},
 		saveEntity: function() {
 			if(this.validate()) {
-				this.model.save(this.model.attributes, {
+				this.model.save(this.changed, {
 					success: function (model, response, options) {
 						Backbone.history.navigate('gameboxes/' + model.get("id"), {trigger: true});
 					},
@@ -34,71 +47,150 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 				});
 			}
 		},
-		showParentSelector: function (e) {
-
+		inputChanged: function (e) {
+			if(!this.changed) {
+				this.changed = {};
+			}
+			if(e.target.name == "isAddon") {
+				if(e.target.checked) {
+					this.showParentSelector(true);
+					this.changed.parent = {id: $("select[name='parentId']").val()}
+				} else {
+					this.showParentSelector(false);
+					this.changed.parent = null;
+				}
+			} else if(e.target.name == "parentId") {
+				this.changed.parent = {id: e.target.value}
+			} else {
+				this.changed[e.target.name] = e.target.value;
+			}
+		},
+		showParentSelector: function (show) {
+			if(show) {
+				$("select[name='parentId']").show();
+			} else {
+				$("select[name='parentId']").hide();
+			}
+		},
+		nextStep: function () {
+			if(this.model.isNew()) {
+				$('.has-error').removeClass('has-error');
+				if(this.changed) {
+					var complete = true;
+					if(this.changed.ukTitle == null) {
+						$('#ukTitle').addClass("has-error");
+						complete = false;
+					}
+					if(this.changed.enTitle == null) {
+						$('#enTitle').addClass("has-error");
+						complete = false;
+					}
+					if(complete) {
+						var view = this;
+						view.model.save(view.changed, {
+							success: function (model, response, options) {
+								view.render("addon");
+							},
+							error: function (model, response, options) {
+								console.log(response);
+							}
+						});
+					}
+				} else {
+					$('#ukTitle').addClass("has-error");
+					$('#enTitle').addClass("has-error");
+				}
+			} else {
+				switch (this.currentStep) {
+					case "title": this.showStep("addon"); break;
+					case "addon": this.showStep("image"); break;
+					case "image": this.showStep("details"); break;
+					case "details": this.showStep("description"); break;
+					case "description": this.showStep("rules"); break;
+					case "rules": this.showFinalDialog(); break;
+				}
+			}
+		},
+		showStep: function (step) {
+			var selector;
+			if(step.target) step = step.currentTarget.dataset.step;
+			if(!this.model.isNew() || step == "title") {
+				if(this.currentStep) {
+					selector = '.step[data-step="' + this.currentStep + '"]';
+					$(selector).removeClass("active");
+					selector = '#' + this.currentStep + '.step-block';
+					$(selector).hide();
+				}
+				this.currentStep = step;
+				selector = '.step[data-step="' + step + '"]';
+				$(selector).addClass("active");
+				selector = '#' + step + '.step-block';
+				$(selector).show();
+				if(step == "rules") {
+					$('.nextStepBtn').text('Завершити');
+				} else {
+					$('.nextStepBtn').text('Наступний блок');
+				}
+			}
+		},
+		showFinalDialog: function () {
+			if(this.changed) {
+				if (confirm('Ви змінили деякі поля забавки, зберегти їх?')) {
+					this.saveEntity();
+				} else {
+					this.cancel();
+				}
+			} else {
+				this.cancel();
+			}
 		},
 		validate: function() {
 			$('.has-error').removeClass('has-error');
+			$('.step.error').removeClass('error');
 			var isValid = true;
-			var temp;
 
-			temp = $('input[name="ukTitle"]').val();
-			if(temp != null && temp != '') {
-				this.model.set('ukTitle', temp);
-			} else {
-				isValid = false;
-				$('#ukTitle').addClass("has-error");
+			if(this.changed.ukTitle != null) {
+				if(this.changed.ukTitle == '') {
+					isValid = false;
+					$('#ukTitle').addClass("has-error");
+					$('.step[data-step="title"]').addClass("error");
+				}
+			}
+			if(this.changed.enTitle != null) {
+				if(this.changed.enTitle == '') {
+					isValid = false;
+					$('#enTitle').addClass("has-error");
+					$('.step[data-step="title"]').addClass("error");
+				}
 			}
 
-			temp = $('input[name="enTitle"]').val();
-			if(temp != null && temp != '') {
-				this.model.set('enTitle', temp);
-			} else {
-				isValid = false;
-				$('#enTitle').addClass("has-error");
+			if(this.changed.mink != null) {
+				if(this.changed.mink == '' || !$.isNumeric(this.changed.mink)) {
+					isValid = false;
+					$('#mink').addClass("has-error");
+					$('.step[data-step="details"]').addClass("error");
+				}
 			}
-
-			temp = $('input[name="mink"]').val();
-			if(temp != null && temp != '') {
-				this.model.set('mink', temp);
-			} else {
-				isValid = false;
-				$('#numbers').addClass("has-error");
+			if(this.changed.maxk != null) {
+				if(this.changed.maxk == '' || !$.isNumeric(this.changed.maxk)) {
+					isValid = false;
+					$('#maxk').addClass("has-error");
+					$('.step[data-step="details"]').addClass("error");
+				}
 			}
-
-			temp = $('input[name="maxk"]').val();
-			if(temp != null && temp != '') {
-				this.model.set('maxk', temp);
-			} else {
-				isValid = false;
-				$('#numbers').addClass("has-error");
+			if(this.changed.minTime != null) {
+				if(this.changed.minTime == '' || !$.isNumeric(this.changed.minTime)) {
+					isValid = false;
+					$('#minTime').addClass("has-error");
+					$('.step[data-step="details"]').addClass("error");
+				}
 			}
-
-			temp = $('input[name="minTime"]').val();
-			if(temp != null && temp != '') {
-				this.model.set('minTime', temp);
-			} else {
-				isValid = false;
-				$('#numbers').addClass("has-error");
-			}
-
-			temp = $('input[name="maxTime"]').val();
-			if(temp != null && temp != '') {
-				this.model.set('maxTime', temp);
-			} else {
-				isValid = false;
-				$('#numbers').addClass("has-error");
-			}
-
-			if($('input[name="isAddon"]')[0].checked) {
-				var parent = {};
-				parent.id = $('select[name="parentId"]').val();
-				this.model.set('parent', parent);
-			}
-
-			temp = $('input[name="description"]').val();
-			if(temp != null && temp != '') {
-				this.model.set('description', temp);
+			if(this.changed.maxTime != null) {
+				if(this.changed.maxTime == '' || !$.isNumeric(this.changed.maxTime)) {
+					isValid = false;
+					$('#maxTime').addClass("has-error");
+					$('.step[data-step="details"]').addClass("error");
+				}
 			}
 
 			return isValid;

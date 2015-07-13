@@ -106,6 +106,40 @@ a {
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px;
 }
 
+.wizard .step.inactive {
+	color: #3B5999;
+	cursor: default !important;
+}
+
+.wizard .step.inactive .status {
+	background-color: #3B5999;
+}
+
+.wizard .step.active .title {
+	color: #fff;
+	font-weight: 700;
+}
+
+.wizard .step.active .status {
+	background-color: #fff;
+}
+
+.wizard .step.success .title {
+	color: #4CAF50;
+}
+
+.wizard .step.success .status {
+	background-color: #4CAF50;
+}
+
+.wizard .step.error .title {
+	color: #c9302c;
+}
+
+.wizard .step.error .status {
+	background-color: #c9302c;
+}
+
 .super-list > .super-list-item {
 	border-bottom: 1px solid #000;
 }

@@ -33,9 +33,12 @@ body {
 }
 
 #sidebar > #slogan {
-	font-size: 30px;
+	font-size: 3em;
 	text-align: center;
-	color: #1976D2;
+	/*color: #1976D2;*/
+	color: #EEE;
+	text-shadow: 1px 1px 2px rgba(0,66,65,0.8);
+	text-align: right;
 }
 
 #sidebar #search, #sidebar .twitter-typeahead .tt-hint {
@@ -81,6 +84,8 @@ body {
 	text-decoration: none;
 	padding-right: 15px;
 	text-align: right;
+	text-shadow: 1px 1px 2px rgba(0,66,65,0.8);
+	font-weight: 600;
 }
 
 #menu > a.inactive {
@@ -195,6 +200,55 @@ body {
 
 #sub-header > span.action {
 	padding: 9px 7px 6px 0px;
+}
+
+.wizard .step .status {
+	width: 10px;
+	height: 10px;
+	background-color: #878DA1;
+	padding: 0;
+	margin: 8px 5px;
+	border-radius: 50%;
+	display: block;
+	float: right;
+}
+
+.wizard .step.inactive {
+	color: #DDD;
+	cursor: default !important;
+}
+
+.wizard .step.inactive .status {
+	background-color: #DDD;
+}
+
+.wizard .step.active .title {
+	color: #3B5999;
+	font-weight: 700;
+}
+
+.wizard .step.active .status {
+	background-color: #3B5999;
+}
+
+.wizard .step.success .title {
+	color: #4CAF50;
+}
+
+.wizard .step.success .status {
+	background-color: #4CAF50;
+}
+
+.wizard .step.error .title {
+	color: #D9534F;
+}
+
+.wizard .step.error .status {
+	background-color: #D9534F;
+}
+
+.step-block {
+	display: none;
 }
 
 #content {
