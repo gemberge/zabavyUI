@@ -125,7 +125,7 @@ body {
 #actions {
 	height: 50px;
 	width: 100%;
-	margin: 15px 0 10px;
+	margin: 5px 0 10px;
 }
 
 #main {
@@ -178,7 +178,7 @@ body {
 }
 
 #header > .avatar {
-	max-height: 82px;
+	max-height: 85px;
 	margin-right: 10px;
 }
 
@@ -201,14 +201,17 @@ body {
 
 .actionLinks > a.active {
 	color: #337ab7;
+	background: none !important;
 }
 
 .actionLinks > a.green {
 	color: #4CAF50;
+	background: none !important;
 }
 
 .actionLinks > a.red.dark {
 	color: #D9534F;
+	background: none !important;
 }
 
 #sub-header {
@@ -314,6 +317,10 @@ body {
 	margin-bottom: 1px;
 }
 
+.super-list > .super-list-item .avatar {
+	line-height: 1;
+}
+
 .super-list > .super-list-item .avatar img {
 	height: 40px;
 	margin-right: 10px;
@@ -371,6 +378,7 @@ body {
 	max-width: 200px;
 	float: left;
 	margin: 10px;
+	overflow: visible;
 	-moz-column-break-inside: avoid;
 	-webkit-column-break-inside: avoid;
 	column-break-inside: avoid;
