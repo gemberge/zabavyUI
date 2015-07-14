@@ -26,6 +26,11 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 			var parents = new Gameboxes();
 			parents.fetch({ async: false, data: {addon: false} });
 			this.$el.html( this.template({ model: this.model, parents: parents }) );
+			if(this.model.get("cover")) {
+
+			} else {
+
+			}
 			if(step) {
 				this.showStep(step);
 			} else {
@@ -89,7 +94,9 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 			}
 		},
 		showImagePreview: function (file) {
-			var canvas = document.getElementById("imagePreview");
+			$("#imageCanvas").show();
+			$("#imagePreview").hide();
+			var canvas = document.getElementById("imageCanvas");
 			var reader = new FileReader();
 			reader.onload = function(event){
 				var img = new Image();

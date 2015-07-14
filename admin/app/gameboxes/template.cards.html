@@ -4,7 +4,7 @@
 		<a class="listViewBtn clickable"><span class="glyphicon glyphicon-th-list"></span></a>
 	</div>
 	<div class="actionLinks pull-right">
-		<a href="#/users/new" class="green"><span class="glyphicon glyphicon-plus"></span></a>
+		<a href="#/gameboxes/new" class="green"><span class="glyphicon glyphicon-plus"></span></a>
 		<a><span class="glyphicon glyphicon-sort"></span></a>
 		<a><span class="glyphicon glyphicon-filter"></span></a>
 	</div>
@@ -12,7 +12,13 @@
 <div class="cards" style="margin: -10px">
 	<% _.each(collection.models, function(model) { %>
 	<div class="card gamebox primary shadowed">
-		<!--<img src="">-->
+		<div class="cover">
+			<% if (model.get("cover")) { %>
+			<img src="/api/files/<%= model.get('cover').id %>/bytes"/>
+			<% } else { %>
+			<img src="/rsc/admin/img/noCover.jpg"/>
+			<% } %>
+		</div>
 		<a href="#gameboxes/<%= model.get('id') %>">
 			<span class="title"><%= model.get('ukTitle') %></span>
 			<span class="subtitle">

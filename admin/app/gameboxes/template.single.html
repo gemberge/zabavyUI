@@ -10,42 +10,53 @@
 	</div>
 	<div id="sub-header">
 		<span>фото (121)</span>
-	<span class="action">
-		<span class="glyphicon glyphicon-plus"></span>
-	</span>
-		<span>відгуки (73)</span>
-	<span class="action">
-		<span class="glyphicon glyphicon-plus"></span>
-	</span>
-		<span>власники (12)</span>
-	<span class="action">
-		<span class="glyphicon glyphicon-plus"></span>
-	</span>
-		<span>партії (421)</span>
-	<span class="action">
-		<span class="glyphicon glyphicon-plus"></span>
-	</span>
+		<span class="action">
+			<span class="glyphicon glyphicon-plus"></span>
+		</span>
+			<span>відгуки (73)</span>
+		<span class="action">
+			<span class="glyphicon glyphicon-plus"></span>
+		</span>
+			<span>власники (12)</span>
+		<span class="action">
+			<span class="glyphicon glyphicon-plus"></span>
+		</span>
+			<span>партії (421)</span>
+		<span class="action">
+			<span class="glyphicon glyphicon-plus"></span>
+		</span>
 	</div>
 	<div id="content">
-		<div class="col-sm-10 col-sm-offset-1 text-justify">
-			від <b><%= model.get('mink') %></b> до <b><%= model.get('maxk') %></b> гравців
+		<div class="col-sm-5">
+			<div class="cover">
+				<% if (model.get("cover")) { %>
+				<img id="imagePreview" src="/api/files/<%= model.get('cover').id %>/bytes"/>
+				<% } else { %>
+				<img id="imagePreview" src="/rsc/admin/img/noCover.jpg"/>
+				<% } %>
+			</div>
 		</div>
-		<div class="col-sm-10 col-sm-offset-1 text-justify">
-			від <b><%= model.get('minTime') %></b> до <b><%= model.get('maxTime') %></b> хвилин бавитись
+		<div class="col-sm-7">
+			<div class="text-justify">
+				від <b><%= model.get('mink') %></b> до <b><%= model.get('maxk') %></b> гравців
+			</div>
+			<div class="text-justify">
+				від <b><%= model.get('minTime') %></b> до <b><%= model.get('maxTime') %></b> хвилин бавитись
+			</div>
+			<% if(model.get('parent') != null) { %>
+			<div class="text-justify">
+				є доповненням до <a href="#gameboxes/<%= model.get('parent').id %>"><b><%= model.get('parent').ukTitle %></b></a>
+			</div>
+			<% } %>
+			<% if(addons != null) { %>
+			<div class="text-justify">
+				доповнення до цієї забавки:
+				<% _.each(addons, function(addon) { %>
+				<a href="#gameboxes/<%= addon.get('id') %>"><b><%= addon.get('ukTitle') %></b></a>,
+				<% }); %>
+			</div>
+			<% } %>
 		</div>
-		<% if(model.get('parent') != null) { %>
-		<div class="col-sm-10 col-sm-offset-1 text-justify">
-			є доповненням до <a href="#gameboxes/<%= model.get('parent').id %>"><b><%= model.get('parent').ukTitle %></b></a>
-		</div>
-		<% } %>
-		<% if(addons != null) { %>
-		<div class="col-sm-10 col-sm-offset-1 text-justify">
-			доповнення до цієї забавки:
-			<% _.each(addons, function(addon) { %>
-			<a href="#gameboxes/<%= addon.get('id') %>"><b><%= addon.get('ukTitle') %></b></a>,
-			<% }); %>
-		</div>
-		<% } %>
 		<div class="col-sm-10 col-sm-offset-1 text-justify">
 			<%= model.get('description') %>
 		</div>

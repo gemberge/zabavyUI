@@ -91,7 +91,12 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-9 col-sm-offset-2">
-					<canvas id="imagePreview"></canvas>
+					<canvas id="imageCanvas"></canvas>
+					<% if (model.get("cover")) { %>
+					<img id="imagePreview" src="/api/files/<%= model.get('cover').id %>/bytes"/>
+					<% } else { %>
+					<img id="imagePreview" src="/rsc/admin/img/noCover.jpg"/>
+					<% } %>
 				</div>
 			</div>
 		</div>
