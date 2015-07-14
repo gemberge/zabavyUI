@@ -28,7 +28,7 @@ body {
 	height: 100%;
 	z-index: 1000;
 	display: block;
-	float: left;
+	position: fixed;
 	overflow-x: hidden;
 	overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 	/*background: #1976D2;*/
