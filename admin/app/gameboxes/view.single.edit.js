@@ -37,6 +37,9 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 		},
 		saveEntity: function() {
 			if(this.validate()) {
+				if(this.changed.cover) {
+					this.changed.cover = this.saveImage(this.changed.cover);
+				}
 				this.model.save(this.changed, {
 					success: function (model, response, options) {
 						Backbone.history.navigate('gameboxes/' + model.get("id"), {trigger: true});
@@ -47,11 +50,31 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 				});
 			}
 		},
+		saveImage: function (file) {
+			var image = null;
+			var formData = new FormData($('form#imageUpload')[0]);
+			$.ajax({
+				async: false,
+				url: 'api/files',
+				type: 'POST',
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function (img, response) {
+					image = img;
+				}
+			});
+			return image;
+		},
 		inputChanged: function (e) {
 			if(!this.changed) {
 				this.changed = {};
 			}
-			if(e.target.name == "isAddon") {
+			if(e.target.name == "file") {
+				this.changed.cover = e.target.files[0];
+				this.showImagePreview(e.target.files[0]);
+			} else if(e.target.name == "isAddon") {
 				if(e.target.checked) {
 					this.showParentSelector(true);
 					this.changed.parent = {id: $("select[name='parentId']").val()}
@@ -64,6 +87,20 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 			} else {
 				this.changed[e.target.name] = e.target.value;
 			}
+		},
+		showImagePreview: function (file) {
+			var canvas = document.getElementById("imagePreview");
+			var reader = new FileReader();
+			reader.onload = function(event){
+				var img = new Image();
+				img.onload = function(){
+					canvas.width = img.width;
+					canvas.height = img.height;
+					canvas.getContext("2d").drawImage(img,0,0);
+				};
+				img.src = event.target.result;
+			};
+			reader.readAsDataURL(file);
 		},
 		showParentSelector: function (show) {
 			if(show) {

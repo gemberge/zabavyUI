@@ -499,3 +499,7 @@ body {
 	height: 60px;
 	margin: -15px -5px -15px 5px;
 }
+
+#imagePreview {
+	width: 100%;
+}
