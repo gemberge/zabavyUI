@@ -8,7 +8,7 @@ body {
 }
 
 .em2 {
-	font-size: 2em;
+	font-size: 2em !important;
 }
 
 .clickable {
@@ -364,6 +364,10 @@ body {
 	text-align: center;
 }
 
+.goOut > * {
+	padding: 3px 5px 3px 10px;
+}
+
 .cards {
 	column-count: 3;
 	column-gap: 20px;
@@ -447,7 +451,7 @@ body {
 	text-align: center;
 }
 
-.card-footer span {
+.card-footer i {
 	padding: 4px 5px 0 0;
 }
 
