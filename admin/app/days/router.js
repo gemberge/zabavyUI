@@ -13,6 +13,12 @@ define(['jquery', 'underscore', 'backbone', 'utils/routeFunc',
 		},
 
 		list: function(paramsString) {
+			var offset = 0, limit = 21;
+			if(paramsString != null) {
+				var params = routeFunc.parseRequestParam(paramsString);
+				if(params.offset) offset = params.offset;
+				if(params.limit) limit = params.limit;
+			}
 			var days = new Collection();
 			days.fetch({
 				data: {offset: offset, limit: limit},
@@ -58,10 +64,3 @@ define(['jquery', 'underscore', 'backbone', 'utils/routeFunc',
 
 	return  Router;
 });
-
-var offset = 0, limit = 21;
-if(paramsString != null) {
-	var params = routeFunc.parseRequestParam(paramsString);
-	if(params.offset) offset = params.offset;
-	if(params.limit) limit = params.limit;
-}

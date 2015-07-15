@@ -1,7 +1,7 @@
-define(['jquery', 'underscore', 'backbone',
+define(['jquery', 'underscore', 'backbone', 'utils/routeFunc',
 		'gameboxes/collection', 'gameboxes/view.list', 'gameboxes/model', 'gameboxes/view.single', 'gameboxes/view.single.edit']
 	, function (
-		$, _, Backbone,
+		$, _, Backbone, routeFunc,
 		Collection, ListView, Model, SingleView, EditView) {
 
 	var Router = Backbone.Router.extend({
@@ -13,8 +13,15 @@ define(['jquery', 'underscore', 'backbone',
 		},
 
 		list: function(paramsString) {
+			var offset = 0, limit = 21;
+			if(paramsString != null) {
+				var params = routeFunc.parseRequestParam(paramsString);
+				if(params.offset) offset = params.offset;
+				if(params.limit) limit = params.limit;
+			}
 			var gameboxes = new Collection();
 			gameboxes.fetch({
+				data: {offset: offset, limit: limit},
 				success: function() {
 					var gameboxesListView = new ListView();
 					gameboxesListView.render({collection: gameboxes});
