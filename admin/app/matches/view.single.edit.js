@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 'bloodhoundSources', 'text!matches/template.single.edit.html',
+define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 'utils/bloodhoundSources', 'text!matches/template.single.edit.html',
 		'scores/model', 'scores/collection', 'scores/view.list.embedded.match', 'days/collection', 'gameboxes/collection', 'gameboxes/collection.addons'],
 	function ($, _, Backbone, Bootstrap, toggle, Typeahead, sources, Template,
 			  ScoreModel, ScoresCollection, ScoresListEmbeddedInMatchView, DaysCollection, GameboxesCollection, AddonsCollection) {
