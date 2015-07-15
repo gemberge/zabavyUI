@@ -23,7 +23,7 @@ define(['jquery', 'underscore', 'backbone', 'utils/routeFunc',
 			days.fetch({
 				data: {offset: offset, limit: limit},
 				success: function() {
-					var daysListView = new ListView();
+					var daysListView = new ListView({offset: offset, limit: limit});
 					daysListView.render({collection: days});
 				},
 				error: function() {

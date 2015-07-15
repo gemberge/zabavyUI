@@ -9,33 +9,5 @@
 		<a><span class="glyphicon glyphicon-filter"></span></a>
 	</div>
 </div>
-<div class="cards" style="margin: -10px">
-	<% _.each(collection.models, function(model) { %>
-	<div class="card gamebox primary shadowed">
-		<div class="cover">
-			<% if (model.get("cover")) { %>
-			<img src="/api/files/<%= model.get('cover').id %>/bytes"/>
-			<% } else { %>
-			<img src="/rsc/admin/img/noCover.jpg"/>
-			<% } %>
-		</div>
-		<a href="#gameboxes/<%= model.get('id') %>">
-			<span class="title"><%= model.get('ukTitle') %></span>
-			<span class="subtitle">
-				<b><%= model.get('mink') + '-' + model.get('maxk') %></b> гравців,
-				<b><%= model.get('minTime') + '-' + model.get('maxTime') %></b> хвилин
-			</span>
-		</a>
-		<div class="card-footer">
-			<div class="stat col-sm-6">
-				<span class="glyphicon glyphicon-comment pull-left"></span>
-				<b>10</b>
-			</div>
-			<div class="stat col-sm-6">
-				<span class="glyphicon glyphicon-fire pull-left"></span>
-				<b>42</b>
-			</div>
-		</div>
-	</div>
-	<% }); %>
-</div>
+<div class="cards" style="margin: -10px"></div>
+<button id="nextPackBtn" type="button" class="btn btn-default">показати наступні</button>

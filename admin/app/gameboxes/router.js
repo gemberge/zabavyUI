@@ -23,7 +23,7 @@ define(['jquery', 'underscore', 'backbone', 'utils/routeFunc',
 			gameboxes.fetch({
 				data: {offset: offset, limit: limit},
 				success: function() {
-					var gameboxesListView = new ListView();
+					var gameboxesListView = new ListView({offset: offset, limit: limit});
 					gameboxesListView.render({collection: gameboxes});
 				},
 				error: function() {

@@ -26,7 +26,7 @@ define(['jquery', 'underscore', 'backbone', 'matches/view.single.edit', 'scores/
 			var view = this;
 			view.scores = new ScoresCollection();
 			view.scores.fetch({
-				data: {matchId: view.model.get('id')},
+				data: {matchId: view.model.get('id'), offset: 0, limit: 3000},
 				success: function (collection, data, options) {
 					var container = view.$el.find('.players');
 					var element;

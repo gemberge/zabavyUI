@@ -23,7 +23,7 @@ define(['jquery', 'underscore', 'backbone', 'utils/routeFunc',
 			users.fetch({
 				data: {offset: offset, limit: limit},
 				success: function() {
-					var usersListView = new ListView();
+					var usersListView = new ListView({offset: offset, limit: limit});
 					usersListView.render({collection: users});
 				},
 				error: function() {

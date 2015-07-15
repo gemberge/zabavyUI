@@ -1,0 +1,20 @@
+<a href="#days/<%= model.get('id') %>" class="super-list-item">
+	<div class="stat pull-right">
+		<span class="value">21</span>
+		<span class="key">людей</span>
+	</div>
+	<div class="stat pull-right">
+		<span class="value">42</span>
+		<span class="key">партій</span>
+	</div>
+	<div class="stat pull-right">
+		<span class="value">
+			<%= moment.duration(model.get('endTime') - model.get('startTime')).hours() %>:<%= moment.duration(model.get('endTime') - model.get('startTime')).minutes() %>
+		</span>
+		<span class="key">тривалість</span>
+	</div>
+	<span class="title"><%= model.get('title') %></span>
+	<span class="subtitle">
+		<%= moment(model.get('startTime')).format('HH:mm, DD.MM.YYYY') %>
+	</span>
+</a>

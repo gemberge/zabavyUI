@@ -1,0 +1,23 @@
+<a href="#gameboxes/<%= model.get('id') %>" class="super-list-item">
+	<div class="stat pull-right">
+		<span class="value">73</span>
+		<span class="key">відгуки</span>
+	</div>
+	<div class="stat pull-right">
+		<span class="value">42</span>
+		<span class="key">партії</span>
+	</div>
+	<div class="stat pull-right">
+		<span class="value">21</span>
+		<span class="key">власник</span>
+	</div>
+	<div class="stat pull-right">
+		<span class="value">3</span>
+		<span class="key">доповнення</span>
+	</div>
+	<span class="title"><%= model.get('ukTitle') %></span>
+	<span class="subtitle">
+		<b><%= model.get('mink') + '-' + model.get('maxk') %></b> гравців,
+		<b><%= model.get('minTime') + '-' + model.get('maxTime') %></b> хвилин
+	</span>
+</a>

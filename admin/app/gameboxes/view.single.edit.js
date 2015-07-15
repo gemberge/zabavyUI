@@ -24,13 +24,8 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 		},
 		render: function(step) {
 			var parents = new Gameboxes();
-			parents.fetch({ async: false, data: {addon: false} });
+			parents.fetch({ async: false, data: {addon: false, offset: 0, limit: 3000} });
 			this.$el.html( this.template({ model: this.model, parents: parents }) );
-			if(this.model.get("cover")) {
-
-			} else {
-
-			}
 			if(step) {
 				this.showStep(step);
 			} else {

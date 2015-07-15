@@ -99,7 +99,7 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'moment', 'datetimepick
 			var temp, model = this.model;
 			if(needUser) {
 				var users = new UsersCollection();
-				users.fetch({async: false});
+				users.fetch({async: false, data: {offset: 0, limit: 3000}});
 				users.each(function(user) {
 					temp = "<option value='" + user.get('id') + "' ";
 					if(model.get('user')) if(user.get('id') == model.get('user').id) temp = temp + "selected";
@@ -109,7 +109,7 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'moment', 'datetimepick
 			}
 			if(needDay) {
 				var days = new DaysCollection();
-				days.fetch({async: false});
+				days.fetch({async: false, data: {offset: 0, limit: 3000}});
 				days.each(function(day) {
 					temp = "<option value='" + day.get('id') + "' ";
 					if(model.get('gamingDay')) if(day.get('id') == model.get('gamingDay').id) temp = temp + "selected";

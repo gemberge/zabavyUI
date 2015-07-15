@@ -160,7 +160,7 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 
 				var temp, model = this.model;
 				if(needEvent) {
 					var events = new DaysCollection();
-					events.fetch({async: false});
+					events.fetch({async: false, data: {offset: 0, limit: 3000}});
 					events.each(function(event) {
 						temp = "<option value='" + event.get('id') + "' ";
 						if(model.get('event')) if(event.get('id') == model.get('event').id) temp = temp + "selected";
@@ -170,7 +170,7 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 
 				}
 				if(needMainGamebox) {
 					var gameboxes = new GameboxesCollection();
-					gameboxes.fetch({async: false, data: {addon: false}});
+					gameboxes.fetch({async: false, data: {addon: false, offset: 0, limit: 3000}});
 					gameboxes.each(function(gamebox) {
 						temp = "<option value='" + gamebox.get('id') + "' ";
 						if(model.get('mainGamebox')) if(gamebox.get('id') == model.get('mainGamebox').id) temp = temp + "selected";

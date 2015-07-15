@@ -1,0 +1,18 @@
+<div class="card primary shadowed">
+	<a href="#days/<%= model.get('id') %>">
+		<span class="title"><%= model.get('title') %></span>
+		<span class="subtitle">
+			<%= moment(model.get('startTime')).format('HH:mm, DD.MM.YYYY') %>
+		</span>
+	</a>
+	<div class="card-footer">
+		<div class="stat col-sm-6">
+			<span class="glyphicon glyphicon-user pull-left"></span>
+			<b>10</b>
+		</div>
+		<div class="stat col-sm-6">
+			<span class="glyphicon glyphicon-fire pull-left"></span>
+			<b>42</b>
+		</div>
+	</div>
+</div>

@@ -50,7 +50,7 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'text!days/template.single
 			$('#content').html('<div class="super-list"></div>');
 			var presenceList = new PresenceCollection();
 			presenceList.fetch({
-				data: {dayId: dayView.model.get('id')},
+				data: {dayId: dayView.model.get('id'), offset: 0, limit: 3000},
 				success: function() {
 					_.each(presenceList.models, function(presence) {
 						var presenceView = new PresenceEmbeddedInEventView({model: presence});
@@ -74,7 +74,7 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'text!days/template.single
 			$('#content').html('<div class="super-list"></div>');
 			var matchList = new MatchesCollection();
 			matchList.fetch({
-				data: {eventId: dayView.model.get('id')},
+				data: {eventId: dayView.model.get('id'), offset: 0, limit: 3000},
 				success: function() {
 					_.each(matchList.models, function(match) {
 						var matchView = new MatchEmbeddedInEventView({model: match});

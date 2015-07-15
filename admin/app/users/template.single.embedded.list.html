@@ -1,0 +1,21 @@
+<a href="#users/<%= model.get('id') %>" class="super-list-item">
+		<span class="avatar pull-left">
+			<img src="<%= model.get('photoUrl') %>" class="img-rounded">
+		</span>
+	<div class="stat pull-right">
+		<span class="value">21</span>
+		<span class="key">здибанок</span>
+	</div>
+	<div class="stat pull-right">
+		<span class="value">42</span>
+		<span class="key">партій</span>
+	</div>
+	<div class="stat pull-right">
+		<span class="value">10</span>
+		<span class="key">забавок</span>
+	</div>
+	<span class="title"><%= model.get('nickname') %></span>
+		<span class="subtitle">
+			<%= model.get('firstName') + ' ' + model.get('lastName') %>
+		</span>
+</a>

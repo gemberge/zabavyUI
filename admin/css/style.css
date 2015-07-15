@@ -516,3 +516,12 @@ body {
 #imagePreview{
 	width: 100%;
 }
+
+#nextPackBtn {
+	margin: 10px;
+	font-size: 2em;
+	border: none;
+	width: 100%;
+	background: none;
+	color: #878DA1;
+}
