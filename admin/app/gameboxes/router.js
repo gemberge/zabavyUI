@@ -6,44 +6,44 @@ define(['jquery', 'underscore', 'backbone',
 
 	var Router = Backbone.Router.extend({
 		routes: {
-			'gameboxes'			: 'gameboxes',
-			'gameboxes/:id'		: 'gameboxes',
-			'gameboxes/new'		: 'editGamebox',
-			'gameboxes/:id/edit': 'editGamebox'
+			'gameboxes'			: 'list',
+			'gameboxes/:id'		: 'single',
+			'gameboxes/new'		: 'singleEdit',
+			'gameboxes/:id/edit': 'singleEdit'
 		},
 
-		gameboxes: function(id) {
-			if(id == null) {
-				var gameboxes = new Collection();
-				gameboxes.fetch({
+		list: function(paramsString) {
+			var gameboxes = new Collection();
+			gameboxes.fetch({
+				success: function() {
+					var gameboxesListView = new ListView();
+					gameboxesListView.render({collection: gameboxes});
+				},
+				error: function() {
+					//TODO: show error
+				}
+			});
+		},
+
+		single: function(id) {
+			if(id == 'new') {
+				this.singleEdit(null);
+			} else {
+				var gamebox = new Model();
+				gamebox.set("id", id);
+				gamebox.fetch({
 					success: function() {
-						var gameboxesListView = new ListView();
-						gameboxesListView.render({collection: gameboxes});
+						var gameboxView = new SingleView({model: gamebox});
+						gameboxView.render();
 					},
 					error: function() {
 						//TODO: show error
 					}
 				});
-			} else {
-				if(id == 'new') {
-					this.editGamebox(null);
-				} else {
-					var gamebox = new Model();
-					gamebox.set("id", id);
-					gamebox.fetch({
-						success: function() {
-							var gameboxView = new SingleView({model: gamebox});
-							gameboxView.render();
-						},
-						error: function() {
-							//TODO: show error
-						}
-					});
-				}
 			}
 		},
 
-		editGamebox: function(id) {
+		singleEdit: function(id) {
 			var gamebox = new Model();
 			if(id != null) {
 				gamebox.set('id', id);

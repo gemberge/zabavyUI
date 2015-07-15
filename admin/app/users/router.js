@@ -6,44 +6,44 @@ define(['jquery', 'underscore', 'backbone',
 
 	var Router = Backbone.Router.extend({
 		routes: {
-			'users'			: 'users',
-			'users/:id'		: 'users',
-			'users/new'		: 'editUser',
-			'users/:id/edit': 'editUser'
+			'users'			: 'list',
+			'users/:id'		: 'single',
+			'users/new'		: 'singleEdit',
+			'users/:id/edit': 'singleEdit'
 		},
 
-		users: function(id) {
-			if(id == null) {
-				var users = new Collection();
-				users.fetch({
+		users: function(paramsString) {
+			var users = new Collection();
+			users.fetch({
+				success: function() {
+					var usersListView = new ListView();
+					usersListView.render({collection: users});
+				},
+				error: function() {
+					//TODO: show error
+				}
+			});
+		},
+
+		single: function(id) {
+			if(id == 'new') {
+				this.singleEdit(null);
+			} else {
+				var user = new Model();
+				user.set("id", id);
+				user.fetch({
 					success: function() {
-						var usersListView = new ListView();
-						usersListView.render({collection: users});
+						var userView = new SingleView({model: user});
+						userView.render();
 					},
 					error: function() {
 						//TODO: show error
 					}
 				});
-			} else {
-				if(id == 'new') {
-					this.editUser(null);
-				} else {
-					var user = new Model();
-					user.set("id", id);
-					user.fetch({
-						success: function() {
-							var userView = new SingleView({model: user});
-							userView.render();
-						},
-						error: function() {
-							//TODO: show error
-						}
-					});
-				}
 			}
 		},
 
-		editUser: function(id) {
+		singleEdit: function(id) {
 			var user = new Model();
 			if(id != null) {
 				user.set('id', id);

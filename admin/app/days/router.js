@@ -1,49 +1,50 @@
-define(['jquery', 'underscore', 'backbone',
+define(['jquery', 'underscore', 'backbone', 'utils/routeFunc',
 		'days/collection', 'days/view.list', 'days/model', 'days/view.single', 'days/view.single.edit']
 	, function (
-		$, _, Backbone,
+		$, _, Backbone, routeFunc,
 		Collection, ListView, Model, SingleView, EditView) {
 
 	var Router = Backbone.Router.extend({
 		routes: {
-			'days'			: 'days',
-			'days/:id'		: 'days',
-			'days/new'		: 'editDay',
-			'days/:id/edit'	: 'editDay'
+			'days'			: 'list',
+			'days/:id'		: 'single',
+			'days/new'		: 'singleEdit',
+			'days/:id/edit'	: 'singleEdit'
 		},
 
-		days: function(id) {
-			if(id == null) {
-				var days = new Collection();
-				days.fetch({
+		list: function(paramsString) {
+			var days = new Collection();
+			days.fetch({
+				data: {offset: offset, limit: limit},
+				success: function() {
+					var daysListView = new ListView();
+					daysListView.render({collection: days});
+				},
+				error: function() {
+					//TODO: show error
+				}
+			});
+		},
+
+		single: function(id) {
+			if(id == 'new') {
+				this.singleEdit(null);
+			} else {
+				var day = new Model();
+				day.set("id", id);
+				day.fetch({
 					success: function() {
-						var daysListView = new ListView();
-						daysListView.render({collection: days});
+						var dayView = new SingleView({model: day});
+						dayView.render();
 					},
 					error: function() {
 						//TODO: show error
 					}
 				});
-			} else {
-				if(id == 'new') {
-					this.editDay(null);
-				} else {
-					var day = new Model();
-					day.set("id", id);
-					day.fetch({
-						success: function() {
-							var dayView = new SingleView({model: day});
-							dayView.render();
-						},
-						error: function() {
-							//TODO: show error
-						}
-					});
-				}
 			}
 		},
 
-		editDay: function(id) {
+		singleEdit: function(id) {
 			var day = new Model();
 			if(id != null) {
 				day.set('id', id);
@@ -57,3 +58,10 @@ define(['jquery', 'underscore', 'backbone',
 
 	return  Router;
 });
+
+var offset = 0, limit = 21;
+if(paramsString != null) {
+	var params = routeFunc.parseRequestParam(paramsString);
+	if(params.offset) offset = params.offset;
+	if(params.limit) limit = params.limit;
+}
