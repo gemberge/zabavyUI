@@ -1,5 +1,5 @@
 <div id="actions">
-	<div class="actionLinks pull-right">
+	<div class="actionLinks right">
 		<a class="clickable delBtn red dark"><i class="fa fa-trash"></i></a>
 		<a class="clickable editBtn"><i class="fa fa-pencil"></i></a>
 	</div>
@@ -9,7 +9,7 @@
 		<span class="title"><%= model.get('title') %></span>
 	</div>
 	<div id="sub-header">
-		<span class="presenceList">люд (14)</span>
+		<span class="presenceList">відвідувачі (14)</span>
 		<span class="action presenceNew">
 			<i class="fa fa-plus"></i>
 		</span>
@@ -19,11 +19,11 @@
 		</span>
 	</div>
 	<div id="content">
-		<div class="col-sm-10 col-sm-offset-1 text-justify">
+		<div class="col m10 s12 offset-m1 text-justify">
 			з <b><%= moment(model.get('startTime')).format('HH:mm, DD.MM.YYYY') %></b>
 			до <b><%= moment(model.get('endTime')).format('HH:mm, DD.MM.YYYY') %></b>
 		</div>
-		<div class="col-sm-10 col-sm-offset-1 text-justify">
+		<div class="col m10 s12 offset-m1 text-justify">
 			<%= model.get('description') %>
 		</div>
 	</div>

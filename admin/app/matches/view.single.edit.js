@@ -1,30 +1,30 @@
-define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 'utils/bloodhoundSources', 'text!matches/template.single.edit.html',
+define(['jquery', 'underscore', 'backbone', 'materialize', 'typeahead', 'utils/bloodhoundSources', 'text!matches/template.single.edit.html',
 		'scores/model', 'scores/collection', 'scores/view.list.embedded.match', 'days/collection', 'gameboxes/collection', 'gameboxes/collection.addons'],
-	function ($, _, Backbone, Bootstrap, toggle, Typeahead, sources, Template,
+	function ($, _, Backbone, Materialize, Typeahead, sources, Template,
 			  ScoreModel, ScoresCollection, ScoresListEmbeddedInMatchView, DaysCollection, GameboxesCollection, AddonsCollection) {
 
 		var View = Backbone.View.extend({
 			el: $('#modal'),
 			template: _.template(Template),
 			events: {
-				'change #mainGamebox select': 'mainGameboxChanged',
+				'change select[name="mainGameboxId"]': 'mainGameboxChanged',
 				'click .saveBtn'	: 'saveEntity',
 				'click .cloneBtn'	: 'cloneEntity',
 				'click .delBtn'		: 'delEntity'
 			},
 			initialize: function(){
-				$(this.el).off('change', '#mainGamebox select');
+				$(this.el).off('change', 'select[name="mainGameboxId"]');
 				$(this.el).off('click', '.saveBtn');
 				$(this.el).off('click', '.delBtn');
 				$(this.el).off('click', '.cloneBtn');
 			},
 			render: function(data) {
 				this.$el.html( this.template(this.model.toJSON()) );
-				$('#modal').modal('show');
-				$('input[name="tutorial"]').bootstrapToggle({width: 120});
+				$('#modal').openModal();
 				if(this.model.isNew()) {
 					if(this.model.get('event') != null) {
-						$("#event > div").html("<p class='form-control-static'>" + this.model.get('event').title + "</p>");
+						$("select[name='eventId']").html("<option value='" + this.model.get('event').id + "' selected> " + this.model.get('event').title + "</option>");
+						$("select[name='eventId']").attr("disabled", "disabled");
 						this.fillSelectors(false, true);
 					} else {
 						this.fillSelectors(true, true);
@@ -37,14 +37,14 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 
 				this.scores = data.scores;
 				this.scoresToRemove = [];
 				var scoresView = new ScoresListEmbeddedInMatchView({collection: this.scores, scoresToRemove: this.scoresToRemove});
-				$('#scores > div').append(scoresView.render().el);
+				$('#scores').html(scoresView.render().el);
 				this.setupTypeahead();
 			},
 			setupTypeahead: function () {
 				$('input[name="newPlayer"]').typeahead({
 					classNames: {
-						menu		: 'dropdown-menu',
-						dataset		: 'autocomplete',
+						menu		: 'autocomplete-menu',
+						dataset		: 'autocomplete-dataset',
 						suggestion	: 'autocomplete-item'
 					}
 				}, {
@@ -55,7 +55,7 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 
 					templates: {
 						pending: '<div class="autocomplete-item pending"><img src="/rsc/admin/img/preloader.gif"></div>',
 						empty: '<div class="autocomplete-item text-muted">нічого такого немає</div>',
-						suggestion: _.template('<div> <img src="<%= photoUrl %>" class="img-rounded" style="height: 40px;"> <%= nickname %> </div>')
+						suggestion: _.template('<div> <img src="<%= photoUrl %>" class="rounded"> <span><%= nickname %></span> </div>')
 					}
 				});
 				var view = this;
@@ -78,18 +78,22 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 
 				var data = {};
 				var view = this;
 				data.tutorial = $('input[name="tutorial"]').prop('checked');
-				data.winType = $('select[name="winType"]').val();
+				if($('input[name="winType"]').prop('checked')) {
+					data.winType = "POINTS";
+				} else {
+					data.winType = "BINARY";
+				}
 
 				if(this.model.isNew()) {
 					if(this.model.get('event') == null) {
-						data.event = {id: $("#event select").val(), title: $("#event option:selected").text()};
+						data.event = {id: $("select[name='eventId']").val(), title: $("select[name='eventId'] option:selected").text()};
 					} else {
 						data.event = this.model.get('event');
 					}
 				} else {
-					data.event = {id: $("#event select").val(), title: $("#event option:selected").text()};
+					data.event = {id: $("select[name='eventId']").val(), title: $("select[name='eventId'] option:selected").text()};
 				}
-				data.mainGamebox = {id: $("#mainGamebox select").val(), ukTitle: $("#mainGamebox option:selected").text()};
+				data.mainGamebox = {id: $("select[name='mainGameboxId']").val(), ukTitle: $("select[name='mainGameboxId'] option:selected").text()};
 				data.additionalGameboxes = [];
 
 				var selector;
@@ -122,16 +126,16 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 
 					score.set("match", view.model.toJSON());
 					score.save({}, {async: false});
 				});
-				$('#modal').modal('hide');
+				$('#modal').closeModal();
 				this.model.trigger("change");
 			},
 			delEntity: function() {
 				if(this.model.isNew()) {
-					$('#modal').modal('hide');
+					$('#modal').closeModal();
 				} else {
 					this.model.destroy({
 						success: function () {
-							$('#modal').modal('hide');
+							$('#modal').closeModal();
 						},
 						error: function (model, response, options) {
 							console.log("error: " + response.status);
@@ -165,7 +169,7 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 
 						temp = "<option value='" + event.get('id') + "' ";
 						if(model.get('event')) if(event.get('id') == model.get('event').id) temp = temp + "selected";
 						temp = temp + ">" + event.get('title') + "</option>";
-						$("#event select").append(temp);
+						$("select[name='eventId']").append(temp);
 					});
 				}
 				if(needMainGamebox) {
@@ -175,13 +179,14 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 
 						temp = "<option value='" + gamebox.get('id') + "' ";
 						if(model.get('mainGamebox')) if(gamebox.get('id') == model.get('mainGamebox').id) temp = temp + "selected";
 						temp = temp + ">" + gamebox.get('ukTitle') + "</option>";
-						$("#mainGamebox select").append(temp);
+						$("select[name='mainGameboxId']").append(temp);
 					});
-					this.updateAddons($('#mainGamebox select').val());
+					this.updateAddons($("select[name='mainGameboxId']").val());
 				}
+				$('select').material_select();
 			},
 			mainGameboxChanged: function () {
-				this.updateAddons($('#mainGamebox select').val());
+				this.updateAddons($("select[name='mainGameboxId']").val());
 			},
 			updateAddons: function(gameboxId) {
 				var model = this.model;
@@ -189,20 +194,19 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 
 				this.addons.fetch({
 					success: function (collection, data) {
 						if(data.length == 0) {
-							$("#additionalGameboxes > div").html("<p class='form-control-static'> немає доступних для цієї забавки</p>");
+							$("#additionalGameboxes > div").html("<p style='margin: 12px 0;'> немає доступних для цієї забавки</p>");
 						} else {
-							$("#additionalGameboxes > div").html("<ul class='list-group'></ul>");
-							var temp;
+							$("#additionalGameboxes > div").html("");
+							var temp, name;
 							_.each(data, function(addon) {
-								temp = '<li class="list-group-item"><span class="pull-right addon"><input name="addon' + addon.id;
-								temp = temp + '" type="checkbox" data-toggle="toggle"></span>' + addon.ukTitle + "</li>";
-								$("#additionalGameboxes ul").append(temp);
+								name = "addon" + addon.id;
+								temp = '<p><input name="' + name + '" type="checkbox" id="' + name + '" /><label for="' + name + '">' + addon.ukTitle + '</label></p>';
+								$("#additionalGameboxes > div").append(temp);
 							});
 							_.each(model.get('additionalGameboxes'), function(addon) {
 								temp = 'input[name="addon' + addon.id + '"]';
 								$(temp).prop('checked', true);
 							});
-							$('#additionalGameboxes input').bootstrapToggle({on: "залучено", off: "не залучено", width: 120});
 						}
 					},
 					error: function (model, response) {
@@ -211,30 +215,9 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'toggle', 'typeahead', 
 				});
 			},
 			validate: function() {
-				$('.has-error').removeClass('has-error');
+				$('.invalid').removeClass('invalid');
 				var isValid = true;
 				var temp;
-
-				temp = $('select[name="userId"]').val();
-				if(temp != null) {
-					this.model.set('user', {id: temp});
-				} else {
-					isValid = false;
-					$('#user').addClass("has-error");
-				}
-
-				temp = $('input[name="timeFrom"]').val();
-				if(temp != null && temp != '') {
-					this.model.set('timeFrom', moment(temp, "HH:mm, DD.MM.YYYY").toISOString());
-				} else {
-					isValid = false;
-					$('#time').addClass("has-error");
-				}
-
-				temp = $('input[name="timeTo"]').val();
-				if(temp != null && temp != '') {
-					this.model.set('timeTo', moment(temp, "HH:mm, DD.MM.YYYY").toISOString());
-				}
 
 				return isValid;
 			}

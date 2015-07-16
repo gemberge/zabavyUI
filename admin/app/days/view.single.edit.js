@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'text!days/template.single.edit.html'],
-	function ($, _, Backbone, momentLib, datetimepicker, Template) {
+define(['jquery', 'underscore', 'backbone', 'moment', 'text!days/template.single.edit.html'],
+	function ($, _, Backbone, momentLib, Template) {
 
 	var EditView = Backbone.View.extend({
 		el: $('#main'),
@@ -20,12 +20,6 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'text!da
 			if(this.model.get("endTime") != '') {
 				$('input[name="endTime"]').val(moment(this.model.get('endTime')).format('HH:mm, DD.MM.YYYY'));
 			}
-			$(".date").datetimepicker({
-				format: 'hh:ii, dd.mm.yyyy',
-				autoclose: true,
-				todayBtn: true,
-				pickerPosition: "bottom-left"
-			});
 		},
 		cancel: function() {
 			window.history.back();

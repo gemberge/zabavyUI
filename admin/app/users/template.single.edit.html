@@ -5,49 +5,30 @@
 	</div>
 </div>
 <div id="page" class="page primary">
-	<div id="content" class="form-horizontal">
-		<div id="firstName" class="form-group">
-			<label class="col-sm-2 control-label">ім'я:</label>
-			<div class="col-sm-9">
-				<input name="firstName" type="text" class="form-control" value="<%= model.get('firstName') %>">
-			</div>
+	<div id="content" class="row">
+		<div class="input-field col s6">
+			<input id="firstName" name="firstName" type="text" class="validate" value="<%= model.get('firstName') %>">
+			<label for="firstName" class="<%if(model.get('firstName') != ''){%>active<%}%>">ім'я:</label>
 		</div>
-		<div id="lastName" class="form-group">
-			<label class="col-sm-2 control-label">прізвище:</label>
-			<div class="col-sm-9">
-				<input name="lastName" type="text" class="form-control" value="<%= model.get('lastName') %>">
-			</div>
+		<div class="input-field col s6">
+			<input id="lastName" name="lastName" type="text" class="validate" value="<%= model.get('lastName') %>">
+			<label for="lastName" class="<%if(model.get('lastName') != ''){%>active<%}%>">прізвище:</label>
 		</div>
-		<div id="nickname" class="form-group">
-			<label class="col-sm-2 control-label">псевдо:</label>
-			<div class="col-sm-9">
-				<input name="nickname" type="text" class="form-control" value="<%= model.get('nickname') %>">
-			</div>
+		<div class="input-field col s6">
+			<input id="nickname" name="nickname" type="text" class="validate" value="<%= model.get('nickname') %>">
+			<label for="nickname" class="<%if(model.get('nickname') != ''){%>active<%}%>">псевдо:</label>
 		</div>
-		<div id="photoUrl" class="form-group">
-			<label class="col-sm-2 control-label">фото:</label>
-			<div class="col-sm-9">
-				<input name="photoUrl" type="text" class="form-control" value="<%= model.get('photoUrl') %>">
-			</div>
+		<div class="input-field col s6">
+			<select name="role">
+				<option value="USER" <%if(model.get('role') == 'USER'){%>selected<%}%> >Користувач</option>
+				<option value="MODER" <%if(model.get('role') == 'MODER'){%>selected<%}%> >Модератор</option>
+				<option value="ADMIN" <%if(model.get('role') == 'ADMIN'){%>selected<%}%> >Адміністратор</option>
+			</select>
+			<label>роль:</label>
 		</div>
-		<div id="role" class="form-group">
-			<label class="col-sm-2 control-label">роль:</label>
-			<div class="col-sm-9">
-				<select name="role" class="form-control">
-					<option value="USER" <%if(model.get('role') == 'USER'){%>selected<%}%> >Користувач</option>
-					<option value="MODER" <%if(model.get('role') == 'MODER'){%>selected<%}%> >Модератор</option>
-					<option value="ADMIN" <%if(model.get('role') == 'ADMIN'){%>selected<%}%> >Адміністратор</option>
-				</select>
-			</div>
-		</div>
-		<div id="createdAt" class="form-group">
-			<label class="col-sm-2 control-label">time:</label>
-			<div class="col-sm-4">
-				<div class="input-group date">
-					<input name="createdAt" class="form-control" type="text">
-					<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-				</div>
-			</div>
+		<div class="input-field col s12">
+			<input id="photoUrl" name="photoUrl" type="text" class="validate" value="<%= model.get('photoUrl') %>">
+			<label for="photoUrl" class="<%if(model.get('photoUrl') != ''){%>active<%}%>">фото:</label>
 		</div>
 	</div>
 </div>

@@ -47,10 +47,8 @@ define(['jquery', 'underscore', 'backbone', 'text!gameboxes/template.list.html',
 			var view = this;
 			view.data.collection.each(function(single) {
 				if(view.mode == "list") {
-					console.log($(".super-list"));
 					$(".super-list").append( view.itemTemplate({model: single}) );
 				} else {
-					console.log(view.$('.cards'));
 					view.$('.cards').append( view.cardTemplate({model: single}) );
 				}
 			});

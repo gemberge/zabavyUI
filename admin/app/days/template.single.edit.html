@@ -1,38 +1,26 @@
 <div id="actions">
-	<div class="actionLinks pull-right">
+	<div class="actionLinks right">
 		<a class="clickable saveBtn green"><i class="fa fa-check"></i></a>
 		<a class="clickable cancelBtn red dark"><i class="fa fa-remove"></i></a>
 	</div>
 </div>
 <div id="page" class="page primary">
-	<div id="content" class="form-horizontal">
-		<div id="title" class="form-group">
-			<label class="col-sm-2 control-label">title:</label>
-			<div class="col-sm-9">
-				<input name="title" type="text" class="form-control" placeholder="Something original" value="<%= model.get('title') %>">
-			</div>
+	<div id="content" class="row">
+		<div class="input-field col s12">
+			<input id="title" name="title" type="text" class="validate" value="<%= model.get('title') %>">
+			<label for="title" class="<%if(model.get('title') != ''){%>active<%}%>">оригінальний заголовок:</label>
 		</div>
-		<div id="description" class="form-group">
-			<label class="col-sm-2 control-label">description:</label>
-			<div class="col-sm-9">
-				<textarea name="description" class="form-control" rows="6" placeholder="Some description"><%= model.get('description') %></textarea>
-			</div>
+		<div class="input-field col s12">
+			<textarea id="description" name="description" class="materialize-textarea" rows="6"><%= model.get('description') %></textarea>
+			<label for="description" class="<%if(model.get('description') != ''){%>active<%}%>">опис:</label>
 		</div>
-		<div id="time" class="form-group">
-			<label class="col-sm-2 control-label">time:</label>
-			<div class="col-sm-4">
-				<div class="input-group date">
-					<input name="startTime" class="form-control" type="text">
-					<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-				</div>
-			</div>
-			<label class="col-sm-1 text-center" style="padding-top: 6px;">to</label>
-			<div class="col-sm-4">
-				<div class="input-group date">
-					<input name="endTime" class="form-control" type="text">
-					<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-				</div>
-			</div>
+		<div class="input-field col m6">
+			<input id="startTime" name="startTime" type="text" class="validate">
+			<label for="startTime" class="<%if(model.get('startTime') != ''){%>active<%}%>">початок:</label>
+		</div>
+		<div class="input-field col m6">
+			<input id="endTime" name="endTime" type="text" class="validate">
+			<label for="endTime" class="<%if(model.get('endTime') != ''){%>active<%}%>">закінчення:</label>
 		</div>
 	</div>
 </div>

@@ -1,10 +1,12 @@
 html {
 	height: 100%;
+	font-family: Fira;
 }
 
 body {
 	height: 100%;
 	background: #E8E9ED;
+	font-family: Fira;
 }
 
 .em2 {
@@ -14,6 +16,55 @@ body {
 .clickable {
 	cursor: pointer;
 }
+
+/*materialize fixes*/
+.rounded {
+	border-radius: 5px;
+}
+
+.modal {
+	overflow-y: visible !important;
+}
+.dropdown-content li > a, .dropdown-content li > span {
+	color: #3B5999 !important;
+}
+
+#additionalGameboxes p {
+	margin: 0 0 0 -10px;
+}
+
+.modal-footer button {
+	margin: 6px !important;
+	padding: 0 1.5rem;
+}
+
+#scores .collection-item {
+	padding: 5px 0 !important;
+	overflow-y: auto;
+	line-height: 1rem;
+}
+.label {
+	display: inline;
+	padding: .2em .6em .3em;
+	font-size: 75%;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25em;
+}
+.label-primary {
+	background-color: #337ab7;
+}
+.label-success {
+	background-color: #5cb85c;
+}
+.small {
+	font-size: 75%;
+}
+/*end materialize fixes*/
 
 #container {
 	min-height: 700px;
@@ -63,6 +114,46 @@ body {
 	opacity: 0;
 }
 
+.autocomplete-menu {
+	background: #fff;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16), 0px 2px 10px 0px rgba(0, 0, 0, 0.12);
+}
+.autocomplete-item {
+	padding: 5px 15px 0px;
+	font-size: 18px;
+	cursor: pointer;
+	overflow-y: auto;
+}
+.autocomplete-item > *{
+	display: block;
+	float: left;
+}
+.autocomplete-item > img{
+	height: 40px;
+}
+.autocomplete-item > span{
+	font-size: 1.3em;
+	padding: 2px 0 10px 10px;
+	color: #3B5999;
+}
+
+.autocomplete-item.tt-cursor, .autocomplete-item:hover {
+	background-color: #f5f5f5;
+}
+
+.autocomplete-item.pending{
+	width: 100px;
+	margin: 0 auto;
+	padding: 10px 0;
+}
+.autocomplete-item.pending:hover{
+	background-color: white;
+}
+.autocomplete-item.pending img{
+	width: 50px;
+	height: 50px;
+	margin: 0 25px;
+}
 #sidebar .tt-dataset-autocomplete {
 	width: 225px;
 	background: #313b3d;
@@ -379,7 +470,7 @@ body {
 
 .card {
 	width: 100%;
-	max-width: 200px;
+	max-width: 190px;
 	float: left;
 	margin: 10px;
 	overflow: visible;
@@ -478,28 +569,6 @@ body {
 }
 .twitter-typeahead {
 	width: 100%;
-}
-
-.autocomplete-item {
-	padding: 5px 15px;
-	font-size: 18px;
-	cursor: pointer;
-}
-
-.autocomplete-item.tt-cursor, .autocomplete-item:hover {
-	background-color: #f5f5f5;
-}
-
-.autocomplete-item.pending{
-	width: 60px;
-	margin: 0 auto;
-	padding: 10px 0;
-}
-.autocomplete-item.pending:hover{
-	background-color: white;
-}
-.autocomplete-item.pending img{
-	width: 60px;
 }
 
 .modal-footer > span {

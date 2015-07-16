@@ -2,7 +2,7 @@ define(['jquery', 'underscore', 'backbone', 'scores/view.single.embedded.match']
 
 	var View = Backbone.View.extend({
 		tagName: 'ul',
-		className: 'list-group',
+		className: 'collection',
 		initialize: function(data) {
 			_(this).bindAll('add', 'remove');
 			this._scoreViews = [];

@@ -3,17 +3,15 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Godlike: Zabavy</title>
-		<link href="/rsc/admin/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/rsc/admin/assets/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
-		<link href="/rsc/admin/assets/bootstrap-toggle/bootstrap-toggle.min.css" rel="stylesheet">
+		<link href="/rsc/admin/assets/materialize/materialize.css" rel="stylesheet">
 		<link href="/rsc/admin/css/style.css" rel="stylesheet">
 		<link href="/rsc/admin/css/style-black.css" rel="stylesheet" id="darkStyles" disabled="disabled">
 		<link href="/rsc/admin/assets/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="/rsc/admin/img/favicon.ico" rel="icon"/>
 	</head>
 	<body>
-		<div id="container">
-			<div id="sidebar" class="col-md-4">
+		<div id="container" class="row">
+			<div id="sidebar" class="col l4">
 				<div id="slogan" class="clickable">
 					забави<span>:club</span>
 				</div>
@@ -32,8 +30,8 @@
 					перейти на <span>світлу сторону</span>
 				</div>
 			</div>
-			<div id="main" class="col-md-8 col-md-offset-4"></div>
-			<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+			<div id="main" class="col l8 offset-l4"></div>
+			<div id="modal" class="modal modal-fixed-footer"></div>
 		</div>
 
 		<script data-main="/rsc/admin/app/init" src="/rsc/admin/assets/require/require.js"> </script>

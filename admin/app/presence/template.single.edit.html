@@ -1,39 +1,25 @@
-<div class="modal-dialog">
-	<div class="modal-content">
-		<div class="modal-body form-horizontal">
-			<div id="user" class="form-group">
-				<label class="col-sm-2 control-label">користувач:</label>
-				<div class="col-sm-9">
-					<select name="userId" class="form-control"></select>
-				</div>
-			</div>
-			<div id="gamingDay" class="form-group">
-				<label class="col-sm-2 control-label">день:</label>
-				<div class="col-sm-9">
-					<select class="form-control"></select>
-				</div>
-			</div>
-			<div id="time" class="form-group">
-				<label class="col-sm-2 control-label">time:</label>
-				<div class="col-sm-4">
-					<div id="from" class="input-group date">
-						<input name="timeFrom" class="form-control" type="text">
-						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-					</div>
-				</div>
-				<label class="col-sm-1 text-center" style="padding-top: 6px;">to</label>
-				<div class="col-sm-4">
-					<div id="to" class="input-group date">
-						<input name="timeTo" class="form-control" type="text">
-						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">скасувати</button>
-			<button type="button" class="btn btn-danger delBtn">видалити</button>
-			<button type="button" class="btn btn-primary saveBtn">зберегти</button>
-		</div>
+<div class="modal-content">
+	<br>
+	<div class="input-field col s6">
+		<select id="userId" name="userId"></select>
+		<label>гравець:</label>
 	</div>
+	<div class="input-field col s6">
+		<select id="eventId" name="eventId"></select>
+		<label>день:</label>
+	</div>
+	<div class="input-field col m6">
+		<input id="timeFrom" name="timeFrom" type="text" class="validate">
+		<label for="timeFrom" class="<%if(model.get('timeFrom') != ''){%>active<%}%>">прибуття:</label>
+	</div>
+	<div class="input-field col m6">
+		<input id="timeTo" name="timeTo" type="text" class="validate">
+		<label for="timeTo" class="<%if(model.get('timeTo') != ''){%>active<%}%>">покидання:</label>
+	</div>
+	<br>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn blue darken-2 saveBtn">зберегти</button>
+	<button type="button" class="btn red lighten-1 delBtn">видалити</button>
+	<button type="button" class="btn-flat modal-action modal-close">скасувати</button>
 </div>

@@ -31,6 +31,8 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 			} else {
 				this.showStep("title");
 			}
+			if(this.model.get("parent") == null) this.showParentSelector(false);
+			$('select').material_select();
 		},
 		cancel: function() {
 			window.history.back();
@@ -91,6 +93,7 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 		showImagePreview: function (file) {
 			$("#imageCanvas").show();
 			$("#imagePreview").hide();
+			$("#filename").val(file.name);
 			var canvas = document.getElementById("imageCanvas");
 			var reader = new FileReader();
 			reader.onload = function(event){
@@ -106,22 +109,22 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 		},
 		showParentSelector: function (show) {
 			if(show) {
-				$("select[name='parentId']").show();
+				$("#parentSelector").show();
 			} else {
-				$("select[name='parentId']").hide();
+				$("#parentSelector").hide();
 			}
 		},
 		nextStep: function () {
 			if(this.model.isNew()) {
-				$('.has-error').removeClass('has-error');
+				$('.invalid').removeClass('invalid');
 				if(this.changed) {
 					var complete = true;
 					if(this.changed.ukTitle == null) {
-						$('#ukTitle').addClass("has-error");
+						$('#ukTitle').addClass("invalid");
 						complete = false;
 					}
 					if(this.changed.enTitle == null) {
-						$('#enTitle').addClass("has-error");
+						$('#enTitle').addClass("invalid");
 						complete = false;
 					}
 					if(complete) {
@@ -136,8 +139,8 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 						});
 					}
 				} else {
-					$('#ukTitle').addClass("has-error");
-					$('#enTitle').addClass("has-error");
+					$('#ukTitle').addClass("invalid");
+					$('#enTitle').addClass("invalid");
 				}
 			} else {
 				switch (this.currentStep) {
@@ -184,21 +187,21 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 			}
 		},
 		validate: function() {
-			$('.has-error').removeClass('has-error');
+			$('.invalid').removeClass('invalid');
 			$('.step.error').removeClass('error');
 			var isValid = true;
 
 			if(this.changed.ukTitle != null) {
 				if(this.changed.ukTitle == '') {
 					isValid = false;
-					$('#ukTitle').addClass("has-error");
+					$('#ukTitle').addClass("invalid");
 					$('.step[data-step="title"]').addClass("error");
 				}
 			}
 			if(this.changed.enTitle != null) {
 				if(this.changed.enTitle == '') {
 					isValid = false;
-					$('#enTitle').addClass("has-error");
+					$('#enTitle').addClass("invalid");
 					$('.step[data-step="title"]').addClass("error");
 				}
 			}
@@ -206,28 +209,28 @@ define(['jquery', 'underscore', 'backbone', 'gameboxes/collection', 'gameboxes/m
 			if(this.changed.mink != null) {
 				if(this.changed.mink == '' || !$.isNumeric(this.changed.mink)) {
 					isValid = false;
-					$('#mink').addClass("has-error");
+					$('#mink').addClass("invalid");
 					$('.step[data-step="details"]').addClass("error");
 				}
 			}
 			if(this.changed.maxk != null) {
 				if(this.changed.maxk == '' || !$.isNumeric(this.changed.maxk)) {
 					isValid = false;
-					$('#maxk').addClass("has-error");
+					$('#maxk').addClass("invalid");
 					$('.step[data-step="details"]').addClass("error");
 				}
 			}
 			if(this.changed.minTime != null) {
 				if(this.changed.minTime == '' || !$.isNumeric(this.changed.minTime)) {
 					isValid = false;
-					$('#minTime').addClass("has-error");
+					$('#minTime').addClass("invalid");
 					$('.step[data-step="details"]').addClass("error");
 				}
 			}
 			if(this.changed.maxTime != null) {
 				if(this.changed.maxTime == '' || !$.isNumeric(this.changed.maxTime)) {
 					isValid = false;
-					$('#maxTime').addClass("has-error");
+					$('#maxTime').addClass("invalid");
 					$('.step[data-step="details"]').addClass("error");
 				}
 			}

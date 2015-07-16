@@ -2,7 +2,7 @@ define(['jquery', 'underscore', 'backbone', 'text!scores/template.single.embedde
 
 	var View = Backbone.View.extend({
 		tagName: 'li',
-		className: 'list-group-item',
+		className: 'collection-item',
 		template: _.template(Template),
 		events: {
 			'click .delScoreBtn': 'deleteScore',

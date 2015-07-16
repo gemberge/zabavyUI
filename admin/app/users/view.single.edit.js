@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'users/model', 'text!users/template.single.edit.html'],
-	function ($, _, Backbone, momentLib, datetimepicker, Model, Template) {
+define(['jquery', 'underscore', 'backbone', 'moment', 'materialize', 'users/model', 'text!users/template.single.edit.html'],
+	function ($, _, Backbone, momentLib, Materialize, Model, Template) {
 
 	var SingleEditView = Backbone.View.extend({
 		el: $('#main'),
@@ -14,16 +14,8 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'users/m
 		},
 		render: function() {
 			this.$el.html( this.template({ model: this.model }) );
-			$("#createdAt .date").datetimepicker({
-				format			: 'hh:ii, dd.mm.yyyy',
-				autoclose		: true,
-				todayBtn		: true,
-				pickerPosition	: "bottom-left",
-				initialDate		: new Date(this.model.get('createdAt'))
-			});
+			$('select').material_select();
 			$("#createdAt .date input").val(moment(this.model.get('createdAt')).format("HH:mm, DD.MM.YYYY"));
-			console.info("created at: " + moment(this.model.get('createdAt')).format("HH:mm, DD.MM.YYYY"));
-			console.info("updated at: " + moment(this.model.get('updatedAt')).format("HH:mm, DD.MM.YYYY"));
 		},
 		cancel: function() {
 			window.history.back();
@@ -45,7 +37,7 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'users/m
 			}
 		},
 		validate: function() {
-			$('.has-error').removeClass('has-error');
+			$('.invalid').removeClass('invalid');
 			var isValid = true;
 			var temp;
 
@@ -54,7 +46,7 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'users/m
 				this.model.set('firstName', temp);
 			} else {
 				isValid = false;
-				$('#firstName').addClass("has-error");
+				$('#firstName').addClass("invalid");
 			}
 
 			temp = $('input[name="lastName"]').val();
@@ -62,7 +54,7 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'users/m
 				this.model.set('lastName', temp);
 			} else {
 				isValid = false;
-				$('#lastName').addClass("has-error");
+				$('#lastName').addClass("invalid");
 			}
 
 			temp = $('input[name="nickname"]').val();
@@ -76,8 +68,6 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'users/m
 			}
 
 			this.model.set('role', $('select[name="role"]').val());
-
-			this.model.set('createdAt', moment($('input[name="createdAt"]').val(), "HH:mm, DD.MM.YYYY").toISOString());
 
 			return isValid;
 		}

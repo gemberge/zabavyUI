@@ -5,18 +5,13 @@ require.config({
 		underscore		: '../assets/underscore/underscore-min',
 		backbone		: '../assets/backbone/backbone-min',
 		text			: '../assets/require/text',
-		bootstrap		: '../assets/bootstrap/js/bootstrap.min',
-		datetimepicker	: '../assets/bootstrap-datetimepicker/bootstrap-datetimepicker.min',
-		toggle			: '../assets/bootstrap-toggle/bootstrap-toggle.min',
+		materialize		: '../assets/materialize/materialize.amd',
 		moment			: '../assets/moment/moment.min',
 		typeahead		: '../assets/typeahead/typeahead.jquery.min',
 		bloodhound		: '../assets/typeahead/bloodhound.min',
 		jsCookie		: '../assets/js.cookie/js.cookie'
 	},
 	shim: {
-		bootstrap: {
-			deps: ["jquery"]
-		},
 		backbone: {
 			deps: ["jquery", "underscore"],
 			exports: "Backbone"

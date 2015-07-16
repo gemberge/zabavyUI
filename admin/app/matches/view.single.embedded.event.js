@@ -32,7 +32,7 @@ define(['jquery', 'underscore', 'backbone', 'matches/view.single.edit', 'scores/
 					var element;
 					container.html("");
 					view.scores.each(function (score) {
-						element = '<img src="' + score.get('user').photoUrl + '" class="img-circle">';
+						element = '<img src="' + score.get('user').photoUrl + '" class="circle">';
 						container.append(element);
 					});
 				},

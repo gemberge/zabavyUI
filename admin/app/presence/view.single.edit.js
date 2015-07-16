@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'backbone', 'bootstrap', 'moment', 'datetimepicker', 'presence/model', 'users/collection', 'days/collection', 'text!presence/template.single.edit.html'],
-	function ($, _, Backbone, Bootstrap, momentLib, datetimepicker, Model, UsersCollection, DaysCollection, Template) {
+define(['jquery', 'underscore', 'backbone', 'materialize', 'moment', 'presence/model', 'users/collection', 'days/collection', 'text!presence/template.single.edit.html'],
+	function ($, _, Backbone, Materialize, momentLib, Model, UsersCollection, DaysCollection, Template) {
 
 	var View = Backbone.View.extend({
 		el: $('#modal'),
@@ -14,14 +14,16 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'moment', 'datetimepick
 		},
 		render: function() {
 			this.$el.html( this.template({ model: this.model }) );
-			$('#modal').modal('show');
+			$('#modal').openModal();
 			if(this.model.isNew()) {
 				if(this.model.get('user') != null) {
-					$("#user > div").html("<p class='form-control-static'>" + this.model.get('user').firstName + ' ' + this.model.get('user').lastName + "</p>");
+					$("select[name='userId']").html("<option value='" + this.model.get('user').id + "' selected> " + this.model.get('user').firstName + ' ' + this.model.get('user').lastName + "</option>");
+					$("select[name='userId']").attr("disabled", "disabled");
 					this.fillSelectors(false, true);
 				}
 				if(this.model.get('gamingDay') != null) {
-					$("#gamingDay > div").html("<p class='form-control-static'>" + this.model.get('gamingDay').title + "</p>");
+					$("select[name='eventId']").html("<option value='" + this.model.get('gamingDay').id + "' selected> " + this.model.get('gamingDay').title + "</option>");
+					$("select[name='eventId']").attr("disabled", "disabled");
 					this.fillSelectors(true, false);
 				}
 				$("div.modal-footer > .delBtn").hide();
@@ -29,47 +31,21 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'moment', 'datetimepick
 				this.fillSelectors(true, true);
 			}
 			if(this.model.get('timeFrom') != 0) {
-				$("#time #from").datetimepicker({
-					format			: 'hh:ii, dd.mm.yyyy',
-					autoclose		: true,
-					todayBtn		: true,
-					pickerPosition	: "bottom-left",
-					initialDate		: new Date(this.model.get('timeFrom'))
-				});
-				$("#time #from input").val(moment(this.model.get('timeFrom')).format("HH:mm, DD.MM.YYYY"));
+				$("input[name='timeFrom']").val(moment(this.model.get('timeFrom')).format("HH:mm, DD.MM.YYYY"));
 			} else {
-				$("#time #from").datetimepicker({
-					format			: 'hh:ii, dd.mm.yyyy',
-					autoclose		: true,
-					todayBtn		: true,
-					pickerPosition	: "bottom-left"
-				});
+				//$("#time #from").datetimepicker();
 			}
 			if(this.model.get('timeTo') != 0) {
-				$("#time #to").datetimepicker({
-					format			: 'hh:ii, dd.mm.yyyy',
-					autoclose		: true,
-					todayBtn		: true,
-					pickerPosition	: "bottom-left",
-					startDate		: new Date(this.model.get('timeFrom')),
-					initialDate		: new Date(this.model.get('timeTo'))
-				});
-				$("#time #to input").val(moment(this.model.get('timeTo')).format("HH:mm, DD.MM.YYYY"));
+				$("input[name='timeTo']").val(moment(this.model.get('timeTo')).format("HH:mm, DD.MM.YYYY"));
 			} else {
-				$("#time #to").datetimepicker({
-					format			: 'hh:ii, dd.mm.yyyy',
-					autoclose		: true,
-					todayBtn		: true,
-					pickerPosition	: "bottom-left",
-					startDate		: new Date(this.model.get('timeFrom'))
-				});
+				//$("#time #to").datetimepicker();
 			}
 		},
 		saveEntity: function() {
 			if(this.validate()) {
 				this.model.save(this.model.attributes, {
 					success: function (model, response, options) {
-						$('#modal').modal('hide');
+						$('#modal').closeModal();
 					},
 					error: function (model, response, options) {
 						console.log("error: " + response.status);
@@ -81,11 +57,11 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'moment', 'datetimepick
 		},
 		delEntity: function() {
 			if(this.model.isNew()) {
-				$('#modal').modal('hide');
+				$('#modal').closeModal();
 			} else {
 				this.model.destroy({
 					success: function () {
-						$('#modal').modal('hide');
+						$('#modal').closeModal();
 					},
 					error: function (model, response, options) {
 						console.log("error: " + response.status);
@@ -104,7 +80,7 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'moment', 'datetimepick
 					temp = "<option value='" + user.get('id') + "' ";
 					if(model.get('user')) if(user.get('id') == model.get('user').id) temp = temp + "selected";
 					temp = temp + ">" + user.get('firstName') + " " + user.get('lastName') + "</option>";
-					$("#user select").append(temp);
+					$("select[name='userId']").append(temp);
 				});
 			}
 			if(needDay) {
@@ -114,9 +90,10 @@ define(['jquery', 'underscore', 'backbone', 'bootstrap', 'moment', 'datetimepick
 					temp = "<option value='" + day.get('id') + "' ";
 					if(model.get('gamingDay')) if(day.get('id') == model.get('gamingDay').id) temp = temp + "selected";
 					temp = temp + ">" + day.get('title') + "</option>";
-					$("#gamingDay select").append(temp);
+					$("select[name='eventId']").append(temp);
 				});
 			}
+			$('select').material_select();
 		},
 		validate: function() {
 			$('.has-error').removeClass('has-error');

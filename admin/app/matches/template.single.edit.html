@@ -1,53 +1,44 @@
-<div class="modal-dialog">
-	<div class="modal-content">
-		<div class="modal-body form-horizontal">
-			<div class="form-group">
-				<label class="col-sm-2 control-label">тип:</label>
-				<div class="col-sm-4">
-					<input name="tutorial" type="checkbox" data-toggle="toggle" data-on="навчальна" data-off="звичайна" <% if(tutorial){%>checked<%}%> >
-				</div>
-				<label class="col-sm-2 control-label">перемога:</label>
-				<div class="col-sm-3">
-					<select name="winType" class="form-control">
-						<option value="POINTS" <% if(winType == 'POINTS'){%>selected<%}%> > за балами </option>
-						<option value="BINARY" <% if(winType == 'BINARY'){%>selected<%}%> > бінарна</option>
-					</select>
-				</div>
-			</div>
-			<div id="event" class="form-group">
-				<label class="col-sm-2 control-label">день:</label>
-				<div class="col-sm-9">
-					<select name="eventId" class="form-control"></select>
-				</div>
-			</div>
-			<div id="mainGamebox" class="form-group">
-				<label class="col-sm-2 control-label">забавка:</label>
-				<div class="col-sm-9">
-					<select name="mainGameboxId" class="form-control"></select>
-				</div>
-			</div>
-			<div id="additionalGameboxes" class="form-group">
-				<label class="col-sm-2 control-label">доповнення:</label>
-				<div class="col-sm-9">
-					<p class='form-control-static'> завантажується </p>
-				</div>
-			</div>
-			<div id="newPlayer" class="form-group">
-				<label class="col-sm-2 control-label">гравці:</label>
-				<div class="col-sm-9">
-					<input name="newPlayer" type="text" class="form-control" placeholder="додавання нового гравця">
-				</div>
-			</div>
-			<div id="scores" class="form-group">
-				<div class="col-sm-9 col-sm-offset-2"></div>
-			</div>
-
+<div class="modal-content">
+	<div class="row">
+		<div class="input-field col m6">
+			<input name="tutorial" type="checkbox" class="filled-in" id="tutorial" <% if(tutorial){%>checked<%}%>/>
+			<label for="tutorial">Це навчальна партія</label>
 		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">скасувати</button>
-			<button type="button" class="btn btn-info cloneBtn">клонувати</button>
-			<button type="button" class="btn btn-danger delBtn">видалити</button>
-			<button type="button" class="btn btn-primary saveBtn">зберегти</button>
+		<div class="input-field col m6">
+			<input name="winType" type="checkbox" class="filled-in" id="winType" <% if(winType == 'POINTS'){%>checked<%}%>/>
+			<label for="winType">Враховувати бали</label>
 		</div>
 	</div>
+	<div class="row">
+		<h5>день:</h5>
+		<div class="input-field col s6">
+			<select id="eventId" name="eventId"></select>
+		</div>
+	</div>
+	<div class="row">
+		<h5>забавки:</h5>
+		<div class="input-field col s6">
+			<select id="mainGameboxId" name="mainGameboxId"></select>
+			<label>основна:</label>
+		</div>
+		<div id="additionalGameboxes" class="input-field col s6">
+			<label class="active">доповнення:</label>
+			<div>
+				<p style='margin: 12px 0;'> завантажується... </p>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="input-field col s12">
+			<input id="newPlayer" name="newPlayer" type="text">
+			<label for="newPlayer" class="active">додавання нового гравця:</label>
+		</div>
+	</div>
+	<div id="scores" class="col m12"></div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn blue darken-2 saveBtn">зберегти</button>
+	<button type="button" class="btn red lighten-1 delBtn">видалити</button>
+	<button type="button" class="btn blue lighten-3 cloneBtn">клонувати</button>
+	<button type="button" class="btn-flat modal-action modal-close">скасувати</button>
 </div>

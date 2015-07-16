@@ -46,31 +46,24 @@
 		</span>
 	</div>
 	<div id="content" class="form-horizontal">
-		<div id="title" class="step-block">
-			<div id="ukTitle" class="form-group">
-				<label class="col-sm-2 control-label">назва:</label>
-				<div class="col-sm-9">
-					<input name="ukTitle" type="text" class="form-control" value="<%= model.get('ukTitle') %>" placeholder="назва українською мовою">
-				</div>
+		<div id="title" class="step-block row">
+			<div class="input-field col s12">
+				<input id="ukTitle" name="ukTitle" type="text" class="validate" value="<%= model.get('ukTitle') %>">
+				<label for="ukTitle" class="<%if(model.get('ukTitle') != ''){%>active<%}%>">назва українською мовою:</label>
 			</div>
-			<div id="enTitle" class="form-group">
-				<label class="col-sm-2 control-label">title:</label>
-				<div class="col-sm-9">
-					<input name="enTitle" type="text" class="form-control" value="<%= model.get('enTitle') %>" placeholder="назва англійською мовою">
-				</div>
+			<div class="input-field col s12">
+				<input id="enTitle" name="enTitle" type="text" class="validate" value="<%= model.get('enTitle') %>">
+				<label for="enTitle" class="<%if(model.get('enTitle') != ''){%>active<%}%>">назва англійською мовою:</label>
 			</div>
 		</div>
-		<div id="addon" class="step-block">
-			<div id="parent" class="form-group">
-				<div class="col-sm-4 col-sm-offset-2">
-					<div class="checkbox">
-						<label>
-							<input name="isAddon" type="checkbox"> є доповненням до
-						</label>
-					</div>
-				</div>
-				<div class="col-sm-5">
-					<select name="parentId" class="form-control">
+		<div id="addon" class="step-block row">
+			<div class="input-field col m6">
+				<input name="isAddon" type="checkbox" class="filled-in" id="filled-in-box" <%if (model.get('parent')) {%>checked="checked" <%}%>/>
+				<label for="filled-in-box">Це доповнення</label>
+			</div>
+			<div id="parentSelector" class="col m6">
+				<div class="input-field col s12">
+					<select name="parentId">
 						<% _.each(parents.models, function(gamebox) { %>
 						<option value="<%= gamebox.get('id') %>" <%if(model.get('parent')) if(gamebox.get('id') == model.get('parent').id){%>selected<%}%> >
 						<%= gamebox.get('ukTitle') %>
@@ -79,18 +72,21 @@
 					</select>
 				</div>
 			</div>
+			<br><br><br><br><br><br><br><br><br><br><br>
 		</div>
-		<div id="image" class="step-block">
-			<div id="cover" class="form-group">
-				<label class="col-sm-2 control-label">фото:</label>
-				<div class="col-sm-9">
+		<div id="image" class="step-block row">
+			<div class="file-field input-field col s12">
+				<input id="filename" class="file-path validate col s9" type="text" value="<%if(model.get('cover')){%><%= model.get('cover').filename %><%}%>"/>
+				<div class="btn col s3">
+					<span>обрати</span>
 					<form id="imageUpload" enctype="multipart/form-data">
-						<input name="file" type="file" class="form-control">
+						<input name="file" type="file">
 					</form>
 				</div>
+				<label for="filename" class="active">Обкладинка</label>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-9 col-sm-offset-2">
+				<div class="col s8 offset-s2">
 					<canvas id="imageCanvas"></canvas>
 					<% if (model.get("cover")) { %>
 					<img id="imagePreview" src="/api/files/<%= model.get('cover').id %>/bytes"/>
@@ -100,44 +96,44 @@
 				</div>
 			</div>
 		</div>
-		<div id="details" class="step-block">
-			<div id="numbers" class="form-group">
-				<label class="col-sm-2 control-label">гравців:</label>
-				<div class="col-sm-3">
-					<div class="col-sm-6" style="margin-left: -15px;">
-						<input name="mink" type="text" class="form-control" value="<%= model.get('mink') %>">
-					</div>
-					<div class="col-sm-6">
-						<input name="maxk" type="text" class="form-control" value="<%= model.get('maxk') %>">
-					</div>
+		<div id="details" class="step-block row">
+			<div class="row">
+				<h5>Допустима кількість гравців:</h5>
+				<div class="input-field col s6 m4">
+					<input id="mink" name="mink" type="text" class="validate" value="<%= model.get('mink') %>">
+					<label for="mink" class="<%if(model.get('mink') != ''){%>active<%}%>">мінімально:</label>
 				</div>
-				<label class="col-sm-2 control-label" style="margin-left: 15px;">тривалість:</label>
-				<div class="col-sm-4">
-					<div class="col-sm-6">
-						<input name="minTime" type="text" class="form-control" value="<%= model.get('minTime') %>">
-					</div>
-					<div class="col-sm-6">
-						<input name="maxTime" type="text" class="form-control" value="<%= model.get('maxTime') %>">
-					</div>
+				<div class="input-field col s6 m4">
+					<input id="maxk" name="maxk" type="text" class="validate" value="<%= model.get('maxk') %>">
+					<label for="maxk" class="<%if(model.get('maxk') != ''){%>active<%}%>">максимально:</label>
+				</div>
+			</div>
+			<div class="row">
+				<h5>Ймовірнна тривалість партії:</h5>
+				<div class="input-field col s6 m4">
+					<input id="minTime" name="minTime" type="text" class="validate" value="<%= model.get('minTime') %>">
+					<label for="minTime" class="<%if(model.get('minTime') != ''){%>active<%}%>">мінімально хвилин:</label>
+				</div>
+				<div class="input-field col s6 m4">
+					<input id="maxTime" name="maxTime" type="text" class="validate" value="<%= model.get('maxTime') %>">
+					<label for="maxTime" class="<%if(model.get('maxTime') != ''){%>active<%}%>">максимально хвилин:</label>
 				</div>
 			</div>
 		</div>
-		<div id="description" class="step-block">
-			<div id="description" class="form-group">
-				<label class="col-sm-2 control-label">опис:</label>
-				<div class="col-sm-9">
-					<textarea name="description" class="form-control" rows="6"><%= model.get('description') %></textarea>
-				</div>
+		<div id="description" class="step-block row">
+			<div class="input-field col s12">
+				<textarea id="descriptionInput" name="description" class="materialize-textarea" rows="6"><%= model.get('description') %></textarea>
+				<label for="descriptionInput" class="<%if(model.get('description') != ''){%>active<%}%>">опис:</label>
 			</div>
 		</div>
-		<div id="rules" class="step-block"></div>
+		<div id="rules" class="step-block row"></div>
 
 		<div class="pull-right">
 			<% if(model.isNew()) { %>
-			<button type="button" class="btn btn-danger cancelBtn">Скасувати</button>
-			<button type="button" class="btn btn-primary nextStepBtn">Продовжити</button>
+			<button type="button" class="btn red lighten-1 cancelBtn">Скасувати</button>
+			<button type="button" class="btn blue darken-2 nextStepBtn">Продовжити</button>
 			<% } else { %>
-			<button type="button" class="btn btn-primary nextStepBtn">Наступний блок</button>
+			<button type="button" class="btn blue darken-2 nextStepBtn">Наступний блок</button>
 			<% } %>
 		</div>
 	</div>
