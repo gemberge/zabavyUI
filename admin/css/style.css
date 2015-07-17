@@ -17,6 +17,10 @@ body {
 	cursor: pointer;
 }
 
+.hidden {
+	display: none;
+}
+
 /*materialize fixes*/
 .rounded {
 	border-radius: 5px;
