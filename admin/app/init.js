@@ -7,6 +7,7 @@ require.config({
 		text			: '../assets/require/text',
 		materialize		: '../assets/materialize/materialize.amd',
 		moment			: '../assets/moment/moment.min',
+		datetimepicker	: '../assets/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker',
 		typeahead		: '../assets/typeahead/typeahead.jquery.min',
 		bloodhound		: '../assets/typeahead/bloodhound.min',
 		jsCookie		: '../assets/js.cookie/js.cookie'
@@ -15,6 +16,9 @@ require.config({
 		backbone: {
 			deps: ["jquery", "underscore"],
 			exports: "Backbone"
+		},
+		datetimepicker: {
+			deps: ["jquery", "moment"]
 		},
 		typeahead: {
 			deps: ["jquery"]
