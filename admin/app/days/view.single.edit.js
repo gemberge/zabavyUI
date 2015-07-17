@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'backbone', 'moment', 'text!days/template.single.edit.html'],
-	function ($, _, Backbone, momentLib, Template) {
+define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'text!days/template.single.edit.html'],
+	function ($, _, Backbone, momentLib, datetimepicker, Template) {
 
 	var EditView = Backbone.View.extend({
 		el: $('#main'),
@@ -17,9 +17,21 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'text!days/template.single
 			if(this.model.get("startTime") != '') {
 				$('input[name="startTime"]').val(moment(this.model.get('startTime')).format('HH:mm, DD.MM.YYYY'));
 			}
+			$('input[name="startTime"]').bootstrapMaterialDatePicker({
+				format: 'HH:mm, DD.MM.YYYY',
+				weekStart : 1,
+				cancelText: 'Скасувати',
+				okText: 'Вибрати'
+			});
 			if(this.model.get("endTime") != '') {
 				$('input[name="endTime"]').val(moment(this.model.get('endTime')).format('HH:mm, DD.MM.YYYY'));
 			}
+			$('input[name="endTime"]').bootstrapMaterialDatePicker({
+				format: 'HH:mm, DD.MM.YYYY',
+				weekStart : 1,
+				cancelText: 'Скасувати',
+				okText: 'Вибрати'
+			});
 		},
 		cancel: function() {
 			window.history.back();

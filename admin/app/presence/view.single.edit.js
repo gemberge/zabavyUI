@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'backbone', 'materialize', 'moment', 'presence/model', 'users/collection', 'days/collection', 'text!presence/template.single.edit.html'],
-	function ($, _, Backbone, Materialize, momentLib, Model, UsersCollection, DaysCollection, Template) {
+define(['jquery', 'underscore', 'backbone', 'materialize', 'moment', 'datetimepicker', 'presence/model', 'users/collection', 'days/collection', 'text!presence/template.single.edit.html'],
+	function ($, _, Backbone, Materialize, momentLib, datetimepicker, Model, UsersCollection, DaysCollection, Template) {
 
 	var View = Backbone.View.extend({
 		el: $('#modal'),
@@ -32,14 +32,22 @@ define(['jquery', 'underscore', 'backbone', 'materialize', 'moment', 'presence/m
 			}
 			if(this.model.get('timeFrom') != 0) {
 				$("input[name='timeFrom']").val(moment(this.model.get('timeFrom')).format("HH:mm, DD.MM.YYYY"));
-			} else {
-				//$("#time #from").datetimepicker();
 			}
+			$('input[name="timeFrom"]').bootstrapMaterialDatePicker({
+				format: 'HH:mm, DD.MM.YYYY',
+				weekStart : 1,
+				cancelText: 'Скасувати',
+				okText: 'Вибрати'
+			});
 			if(this.model.get('timeTo') != 0) {
 				$("input[name='timeTo']").val(moment(this.model.get('timeTo')).format("HH:mm, DD.MM.YYYY"));
-			} else {
-				//$("#time #to").datetimepicker();
 			}
+			$('input[name="timeTo"]').bootstrapMaterialDatePicker({
+				format: 'HH:mm, DD.MM.YYYY',
+				weekStart : 1,
+				cancelText: 'Скасувати',
+				okText: 'Вибрати'
+			});
 		},
 		saveEntity: function() {
 			if(this.validate()) {
