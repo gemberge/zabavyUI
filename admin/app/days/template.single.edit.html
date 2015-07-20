@@ -11,7 +11,7 @@
 			<label for="title" class="<%if(model.get('title') != ''){%>active<%}%>">оригінальний заголовок:</label>
 		</div>
 		<div class="input-field col s12">
-			<textarea id="description" name="description" class="materialize-textarea" rows="6"><%= model.get('description') %></textarea>
+			<textarea id="description" name="description" class="materialize-textarea validate" rows="6"><%= model.get('description') %></textarea>
 			<label for="description" class="<%if(model.get('description') != ''){%>active<%}%>">опис:</label>
 		</div>
 		<div class="input-field col m6">

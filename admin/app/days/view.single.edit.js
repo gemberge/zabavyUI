@@ -53,7 +53,7 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'text!da
 			}
 		},
 		validate: function() {
-			$('.has-error').removeClass('has-error');
+			$('.invalid').removeClass('invalid');
 			var isValid = true;
 			var temp;
 
@@ -62,15 +62,12 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'text!da
 				this.model.set('title', temp);
 			} else {
 				isValid = false;
-				$('#title').addClass("has-error");
+				$('#title').addClass("invalid");
 			}
 
 			temp = $('textarea[name="description"]').val();
-			if(temp != null && temp != '') {
+			if(temp != null) {
 				this.model.set('description', temp);
-			} else {
-				isValid = false;
-				$('#description').addClass("has-error");
 			}
 
 			temp = $('input[name="startTime"]').val();
@@ -78,7 +75,7 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'text!da
 				this.model.set('startTime', moment(temp, "HH:mm, DD.MM.YYYY"));
 			} else {
 				isValid = false;
-				$('#time').addClass("has-error");
+				$('#startTime').addClass("invalid");
 			}
 
 			temp = $('input[name="endTime"]').val();
@@ -86,7 +83,7 @@ define(['jquery', 'underscore', 'backbone', 'moment', 'datetimepicker', 'text!da
 				this.model.set('endTime', moment(temp, "HH:mm, DD.MM.YYYY"));
 			} else {
 				isValid = false;
-				$('#time').addClass("has-error");
+				$('#endTime').addClass("invalid");
 			}
 
 			return isValid;
