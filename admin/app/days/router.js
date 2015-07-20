@@ -1,35 +1,35 @@
-define(['jquery', 'underscore', 'backbone', 'utils/routeFunc',
-		'days/collection', 'days/view.list', 'days/model', 'days/view.single', 'days/view.single.edit']
-	, function (
-		$, _, Backbone, routeFunc,
-		Collection, ListView, Model, SingleView, EditView) {
+define(['jquery', 'underscore', 'backbone', 'utils/routeFunc', 'moment', 'days/view.list', 'days/model', 'days/view.single', 'days/view.single.edit'],
+	function ( $, _, Backbone, routeFunc, momentLib, ListView, Model, SingleView, EditView) {
 
 	var Router = Backbone.Router.extend({
 		routes: {
 			'days'			: 'list',
 			'days/:id'		: 'single',
-			'days/new'		: 'singleEdit',
 			'days/:id/edit'	: 'singleEdit'
 		},
 
 		list: function(paramsString) {
-			var offset = 0, limit = 21;
+			var startDay = null;
 			if(paramsString != null) {
 				var params = routeFunc.parseRequestParam(paramsString);
-				if(params.offset) offset = params.offset;
-				if(params.limit) limit = params.limit;
+				if(params.startDay) startDay = moment(params.startDay);
 			}
-			var days = new Collection();
-			days.fetch({
-				data: {offset: offset, limit: limit},
-				success: function() {
-					var daysListView = new ListView({offset: offset, limit: limit});
-					daysListView.render({collection: days});
-				},
-				error: function() {
-					//TODO: show error
+			if(startDay == null) {
+				startDay = moment();
+				startDay.subtract(7, 'days');
+				startDay.hour(0);
+				startDay.minute(0);
+				startDay.second(0);
+			}
+			if(startDay.day() != 1) {
+				if(startDay.day() == 0) {
+					startDay = startDay.subtract(6, 'days');
+				} else {
+					startDay = startDay.subtract(startDay.day() - 1, 'days');
 				}
-			});
+			}
+			var daysListView = new ListView({startDay: startDay});
+			daysListView.render();
 		},
 
 		single: function(id) {

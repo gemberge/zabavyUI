@@ -1,66 +1,63 @@
-define(['jquery', 'underscore', 'backbone', 'moment', 'text!days/template.list.html', 'text!days/template.cards.html',
-		'text!days/template.single.embedded.list.html', 'text!days/template.single.embedded.cards.html'],
-	function ($, _, Backbone, momentLib, ListTemplate, CardsTemplate, ItemTemplate, CardTemplate) {
+define(['jquery', 'underscore', 'backbone', 'moment', 'text!days/template.calendar.html', 'days/view.single.embedded.calendar', 'days/model.calendar.day'],
+	function ($, _, Backbone, momentLib, CalendarTemplate, CalendarDayView, CalendarDayModel) {
 
 	var ViewList = Backbone.View.extend({
 		el: $('#main'),
-		listTemplate: _.template(ListTemplate),
-		cardsTemplate: _.template(CardsTemplate),
-		itemTemplate: _.template(ItemTemplate),
-		cardTemplate: _.template(CardTemplate),
-		events: {
-			'click .cardsViewBtn'	: 'switchToCardsMode',
-			'click .listViewBtn'	: 'switchToListMode',
-			'click #nextPackBtn'	: 'loadNextPack'
-		},
+		calendarTemplate: _.template(CalendarTemplate),
+		startDay: null,
 		initialize: function(params){
-			this.offset = parseInt(params.offset);
-			this.limit = parseInt(params.limit);
-			$(this.el).off('click', '#nextPackBtn');
-			$(this.el).off('click', '.cardsViewBtn');
-			$(this.el).off('click', '.listViewBtn');
+			this.startDay = params.startDay;
 		},
-		render: function(data) {
-			this.data = data;
-			if(this.mode == "list") {
-				this.$el.html( this.listTemplate(this.data) );
-			} else {
-				this.$el.html( this.cardsTemplate(this.data) );
+		render: function() {
+			var view = this;
+			this.$el.html( this.calendarTemplate({	prevDate: view.startDay.clone().subtract(28, 'days').toISOString(),
+													nextDate: view.startDay.clone().add(28, 'days').toISOString()}) );
+			var days = this.generateCalendar();
+			var n = 0, i = 0;
+			var weekDivs = $('.week');
+			var daysDiv = $(weekDivs[i]).find('.days');
+			var eventsDiv = $(weekDivs[i]).find('.events');
+			var dayView;
+			_.each(days, function(day) {
+				if(n == 7) {
+					n = 0;
+					i = i + 1;
+					daysDiv = $(weekDivs[i]).find('.days');
+					eventsDiv = $(weekDivs[i]).find('.events');
+				}
+				dayView = new CalendarDayView({model: day, eventsDiv: eventsDiv});
+				daysDiv.append(dayView.render().el);
+				n = n + 1;
+			});
+			$.ajax({
+				url: '/api/days/count',
+				type: 'GET',
+				data: {'dateFrom': days[0].get("date").valueOf(), 'dateTo': days[27].get("date").valueOf()},
+				success: function (data) {
+					var i = 0;
+					_.each(data, function (count) {
+						for(; i < days.length; i++) {
+							if(moment(count[0]).isSame(days[i].get("date"), 'day')) {
+								days[i].set("count", count[1]);
+								break;
+							}
+						}
+					});
+
+				}
+			});
+		},
+		generateCalendar: function() {
+			var days = [], day, currentDay = moment(), view = this;
+			for(var i = 0; i < 28; i = i+1) {
+				day = new CalendarDayModel({
+					date: view.startDay.clone()
+				});
+				if(view.startDay.isSame(currentDay, 'day')) day.set("isCurrent", true);
+				days.push(day);
+				view.startDay.add(1, 'days');
 			}
-			this.showNextPack();
-		},
-		loadNextPack: function() {
-			var view = this;
-			view.data.collection.fetch({
-				data: {offset: view.offset + view.limit, limit: view.limit},
-				success: function() {
-					view.offset = view.offset + view.limit;
-					view.showNextPack();
-					//TODO: update url
-				},
-				error: function() {
-					//TODO: show error
-				}
-			});
-		},
-		showNextPack: function() {
-			var view = this;
-			view.data.collection.each(function(single) {
-				if(view.mode == "list") {
-					$(".super-list").append( view.itemTemplate({model: single}) );
-				} else {
-					view.$('.cards').append( view.cardTemplate({model: single}) );
-				}
-			});
-			if(view.data.collection.length < view.limit) $("#nextPackBtn").hide();
-		},
-		switchToCardsMode: function () {
-			this.mode = "cards";
-			this.render(this.data);
-		},
-		switchToListMode: function () {
-			this.mode = "list";
-			this.render(this.data);
+			return days;
 		}
 	});
 

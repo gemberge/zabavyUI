@@ -1,0 +1,3 @@
+<% if (model.get('count')) {%> <span class="count"><%= model.get('count') %></span> <%}%>
+<span class="number"><%= model.get('date').format('DD') %></span>
+<span class="month"><%= model.get('date').format('MMMM') %></span>
